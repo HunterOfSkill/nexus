@@ -1,10 +1,9 @@
-/* Hier kommen die Zugangsdaten deines Konto-Dienstes (Firebase) hinein.
-   Anleitung: EINRICHTUNG.txt, Schritt 5. Diese Werte sind nicht geheim. */
+/* Zugangsdaten des Konto-Dienstes (Firebase). Diese Werte sind nicht geheim. */
 window.SAMMLUNG_FIREBASE = {
-  apiKey: "DEIN_API_KEY",
-  authDomain: "DEIN_PROJEKT.firebaseapp.com",
-  projectId: "DEIN_PROJEKT",
-  storageBucket: "DEIN_PROJEKT.firebasestorage.app",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:0000000000000000"
+  apiKey: "AIzaSyB0C0S3tDQpxhcIK9PBxsclQHjzkxmifoU",
+  authDomain: "nexus-the-collectors-app.firebaseapp.com",
+  projectId: "nexus-the-collectors-app",
+  storageBucket: "nexus-the-collectors-app.firebasestorage.app",
+  messagingSenderId: "214744434502",
+  appId: "1:214744434502:web:d544d9ab99c18f08b6c747"
 };
