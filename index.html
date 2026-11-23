@@ -858,8 +858,9 @@ body[data-cat="werkzeug"] .wzdim{display:block;position:absolute;left:0;right:0;
 .chips .flogo.cut img{border-radius:0;box-shadow:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))!important}
 /* Besucherzähler oben links (nur für den Seiten-Besitzer sichtbar) */
 main{position:relative}
-.nxvis{position:absolute;left:0;top:62px;z-index:6;display:flex;flex-direction:column;gap:4px;padding:7px 12px;border-radius:12px;font-size:.74rem;line-height:1;color:#fff;background:rgba(0,0,0,.62);border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 3px 10px rgba(0,0,0,.3)}
-.nxvis b{font-weight:700}.nxvis span{opacity:.75}.nxvis div:first-child{font-size:.82rem}
+.nxvis{position:absolute;left:0;top:54px;z-index:6;display:flex;flex-direction:column;gap:4px;padding:7px 12px;border-radius:12px;font-size:.74rem;line-height:1;color:#fff;background:rgba(0,0,0,.62);border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.nxvis b{font-weight:700}.nxvis span{opacity:.75}.nxvis div:nth-of-type(1){font-size:.82rem}
+.nxvis em{align-self:flex-start;font-style:normal;font-weight:800;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:999px;color:#1a1204;background:linear-gradient(180deg,#ffd98a,#e9a23b);box-shadow:0 1px 4px rgba(0,0,0,.4)}
 .nxvis[hidden]{display:none}
 /* Filament: Stückzahl +/- und NFC */
 .vlogo{left:12px;bottom:12px;height:52px;max-width:40%}
@@ -4161,7 +4162,7 @@ async function visShow() {
       f.getDocFromServer(f.doc(fdb, "stats", "total")),
     ]);
     const de = L() === "de", n = all.data().count, t = today.data().count, v = tot.exists() ? tot.data().n || 0 : 0, fmt = (x) => x.toLocaleString(de ? "de-DE" : "en-GB");
-    el.innerHTML = '<div><b>👁 ' + fmt(n) + '</b> <span>' + (de ? "Besucher" : "visitors") + '</span></div><div><b>' + fmt(t) + '</b> <span>' + (de ? "heute" : "today") + '</span> · <b>' + fmt(v) + '</b> <span>' + (de ? "Aufrufe" : "views") + "</span></div>";
+    el.innerHTML = '<em>★ Admin</em><div><b>👁 ' + fmt(n) + '</b> <span>' + (de ? "Besucher" : "visitors") + '</span></div><div><b>' + fmt(t) + '</b> <span>' + (de ? "heute" : "today") + '</span> · <b>' + fmt(v) + '</b> <span>' + (de ? "Aufrufe" : "views") + "</span></div>";
     el.title = de ? "Nur für dich sichtbar" : "Only visible to you";
     el.hidden = false;
   } catch (e) { el.hidden = true; }
