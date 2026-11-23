@@ -1586,8 +1586,11 @@ body .tpanel .tval{color:#c3d0c9}
     im.onerror=function(){URL.revokeObjectURL(u);rej();};
     im.src=u;
   });}
+  var mainKey=null;
   function drawPrev(){
     var el=document.getElementById("prev");if(!el)return;
+    /* Hauptbild gewechselt (neu, entfernt, ★ umgesetzt, zugeschnitten)? → Bescheid geben */
+    var mk0=pend[0]?pend[0].src:"";if(mk0!==mainKey){var was=mainKey;mainKey=mk0;if(was!==null)setTimeout(function(){try{fAdd.dispatchEvent(new CustomEvent("nx-main"));}catch(x){}},0);}
     el.innerHTML=pend.map(function(p,i){
       var de2=lang==="de",bgB=p.busy?'<span class="bgspin" aria-hidden="true"></span>':(p.orig?'<button type="button" class="bgx" data-undo="'+i+'" title="'+(de2?"Original wiederherstellen":"Restore original")+'" aria-label="'+(de2?"Original wiederherstellen":"Restore original")+'">↺</button>':'<button type="button" class="bgx" data-bg="'+i+'" title="'+(de2?"Hintergrund entfernen":"Remove background")+'" aria-label="'+(de2?"Hintergrund entfernen":"Remove background")+'">✂</button>');
       return '<div class="'+(i===0?"main":"")+(p.orig?" cut":"")+'"><img src="'+esc(p.src)+'" alt="">'+bgB+'<button type="button" class="x" data-rm="'+i+'" aria-label="'+esc(t("remove"))+'">×</button>'+
@@ -1636,7 +1639,7 @@ body .tpanel .tval{color:#c3d0c9}
   function freeNewUrls(){pend.forEach(function(p){if(p.blob)try{URL.revokeObjectURL(p.src);}catch(e){}});}
 
   /* ---------- Hinzufügen / Bearbeiten ---------- */
-  function openAdd(c,it){
+  function openAdd(c,it){mainKey=null;
     addCat=c;editId=it?it.id:null;
     pend=it?it.images.map(function(id){return {id:id,src:thumbUrl(id)};}):[];
     var dv=it?it.data:{};
@@ -1943,14 +1946,17 @@ body .tpanel .tval{color:#c3d0c9}
         var did=[];
         if(r.typ&&wT&&(!wT.value||wT.dataset.auto)){wT.value=r.typ;wT.dataset.auto="1";did.push(lang==="de"?"Zangenart":"Type");}
         if(r.mm&&wG&&(!wG.value||wG.dataset.auto)){wG.value=r.mm;wG.dataset.auto="1";did.push(lang==="de"?"Größe":"Size");}
-        if(wM&&!wM.value){wM.value="Knipex";did.push(lang==="de"?"Hersteller":"Brand");}
-        if(r.nr&&wA&&!wA.value){wA.value=r.nr;did.push(lang==="de"?"Artikelnummer":"Item no.");}
+        if(wM&&(!wM.value||wM.dataset.auto)){wM.value="Knipex";wM.dataset.auto="1";did.push(lang==="de"?"Hersteller":"Brand");}
+        if(r.nr&&wA&&(!wA.value||wA.dataset.auto)){wA.value=r.nr;wA.dataset.auto="1";did.push(lang==="de"?"Artikelnummer":"Item no.");}
         var tl=r.typ?optLabel(fieldOf("werkzeug","typ"),r.typ):"";
         wSet((src?'📷 ':'')+'<b>KNIPEX '+esc(r.nr||"")+'</b>'+(tl?' → '+esc(tl):'')+(r.mm?' · '+r.mm+' mm':'')+(did.length?'<br>'+esc((lang==="de"?"Eingetragen: ":"Filled in: ")+did.join(", ")):''));
       };
       if(wT)wT.addEventListener("change",function(){delete wT.dataset.auto;});
       if(wG)wG.addEventListener("input",function(){delete wG.dataset.auto;});
-      if(wA)wA.addEventListener("input",function(){var r=knipexParse(wA.value);if(r)wFill(r,false);});
+      if(wA)wA.addEventListener("input",function(){delete wA.dataset.auto;var r=knipexParse(wA.value);if(r)wFill(r,false);});
+      if(wM)wM.addEventListener("input",function(){delete wM.dataset.auto;});
+      /* Neues Hauptbild: automatisch eingetragene Werte gelten nicht mehr */
+      var wClear=function(){[wA,wT,wG,wM].forEach(function(x){if(x&&x.dataset.auto){x.value="";delete x.dataset.auto;}});};
       var wMark=function(){
         var first=pend.filter(function(x){return x.blob||x.src;})[0];if(!first||wBusy)return;var de=lang==="de";
         (first.blob?Promise.resolve(first.blob):fetch(first.src).then(function(r){return r.blob();})).then(function(b){
@@ -1963,17 +1969,26 @@ body .tpanel .tval{color:#c3d0c9}
         }).catch(function(){wBusy=false;wSet(esc(lang==="de"?"Lesen gerade nicht möglich (Internet prüfen).":"Reading unavailable (check connection)."));});
       };
       if(wH)wH.addEventListener("click",function(e){if(e.target.closest("#wMark"))wMark();});
+      var wAgain=false;
       var wRun=function(){
-        var first=pend.filter(function(x){return x.blob;})[0];if(!first||wBusy||wSeen[first.src])return;
-        wBusy=true;wSeen[first.src]=1;wSet(esc(lang==="de"?"Suche die KNIPEX-Artikelnummer auf dem Foto … (beim ersten Mal dauert es etwas)":"Looking for the KNIPEX item number in the photo …"),true);
+        var first=pend[0]&&pend[0].blob?pend[0]:null;
+        if(!first){if(!pend.length){wClear();wSet("");}return;}
+        if(wBusy){wAgain=true;return;}
+        if(wSeen[first.src]){if(wSeen[first.src]!==wSeen._last){wSeen._last=wSeen[first.src];wClear();if(wSeen[first.src].r)wFill(wSeen[first.src].r,true);else wSet("");}return;}
+        wClear();
+        wBusy=true;var rec={};wSeen[first.src]=rec;wSeen._last=rec;wSet(esc(lang==="de"?"Suche die KNIPEX-Artikelnummer auf dem Foto … (beim ersten Mal dauert es etwas)":"Looking for the KNIPEX item number in the photo …"),true);
         tessLoad().then(function(T){return T.createWorker("eng",1,{langPath:"https://tessdata.projectnaptha.com/4.0.0_best"}).then(function(w){
           return tessCanvas(first.blob).then(function(cv){return knipexScan(w,cv,function(i,n){wSet(esc((lang==="de"?"Suche die Nummer auf dem Foto … ":"Scanning the photo … ")+Math.round(i/n*100)+" %"),true);});})
             .then(function(r){return w.terminate().catch(function(){}).then(function(){return r;});},function(e){w.terminate().catch(function(){});throw e;});});})
         .then(function(r){wBusy=false;
+          if(pend[0]!==first){wAgain=false;wRun();return;}
+          if(wAgain){wAgain=false;}
+          rec.r=r||null;
           if(r){wFill(r,true);}else wSet(esc(lang==="de"?"Automatisch habe ich die Nummer nicht gefunden. Markier sie kurz im Foto – dann klappt es zuverlässig:":"Couldn't find the number automatically. Mark it in the photo:")+' <button type="button" class="ghost onlb" id="wMark">🔍 '+esc(lang==="de"?"Nummer im Foto markieren":"Mark number in photo")+'</button>');})
         .catch(function(){wBusy=false;delete wSeen[first.src];wSet(esc(lang==="de"?"Erkennung gerade nicht möglich (Internet prüfen).":"Recognition unavailable (check connection)."));});
       };
       if(fAdd._nxPh)fAdd.removeEventListener("nx-photo",fAdd._nxPh);fAdd._nxPh=wRun;fAdd.addEventListener("nx-photo",wRun);
+      if(fAdd._nxMain)fAdd.removeEventListener("nx-main",fAdd._nxMain);fAdd._nxMain=wRun;fAdd.addEventListener("nx-main",wRun);
     }
     var lmI=document.getElementById("f-laenge"),lhI=document.getElementById("f-laenge_h"),lsm=document.getElementById("lensum");
     function lenSum(){if(!lsm||!lmI)return;var m=parseFloat(lmI.value);lsm.textContent=(!isNaN(m)&&m>0)?"= "+fmtLen(m):"";}
@@ -3265,8 +3280,16 @@ body .tpanel .tval{color:#c3d0c9}
   }
   /* Schriftzeile auf dem Foto finden: dunkle, gleich große Zeichen auf hellerem/farbigem Grund, die in einer Linie liegen.
      Ergebnis: gerade gedrehter, vergrößerter Ausschnitt nur mit der Nummer (viel zuverlässiger für die Texterkennung). */
+  /* Sucht auf zwei Auflösungen: grob findet große Aufdrucke, fein trennt dicht stehende Zahlen (z. B. auf der Kabelschere) */
   function knipexFind(src){
-    var S=600,k=S/Math.max(src.width,src.height),W=Math.max(1,Math.round(src.width*k)),H=Math.max(1,Math.round(src.height*k));
+    var all=[],D=Math.max(src.width,src.height)*0.03;
+    [600,800,1000,700].forEach(function(S,si){try{knipexFind1(src,S).forEach(function(c,ri){c._r=ri*4+si;all.push(c);});}catch(e){}});
+    all.sort(function(x,y){return x._r-y._r;});
+    var out=[];all.forEach(function(c){if(out.length<8&&!out.some(function(o){return Math.hypot(o._cx-c._cx,o._cy-c._cy)<D&&Math.abs(o.width-c.width)<o.width*0.25;}))out.push(c);});
+    return out;
+  }
+  function knipexFind1(src,S){
+    var k=S/Math.max(src.width,src.height),W=Math.max(1,Math.round(src.width*k)),H=Math.max(1,Math.round(src.height*k));
     var c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");x.drawImage(src,0,0,W,H);
     var d;try{d=x.getImageData(0,0,W,H).data;}catch(e){return [];}
     var N=W*H,mx=new Float32Array(N),i,j;for(i=0;i<N;i++)mx[i]=Math.max(d[i*4],d[i*4+1],d[i*4+2]);
@@ -3282,21 +3305,29 @@ body .tpanel .tval{color:#c3d0c9}
       if(sz<3||sz>40||ar<6||ar>0.85*bw*bh+1)continue;
       var rs=0,rc=0;for(var yy=Math.max(0,y0-3);yy<=Math.min(H-1,y1+3);yy++)for(var xx=Math.max(0,x0-3);xx<=Math.min(W-1,x1+3);xx++){var r2=yy*W+xx;if(!dark[r2]){rs+=mx[r2];rc++;}}
       if(rc&&rs/rc>1.7*(sv/ar))bl.push({x:sx/ar,y:sy/ar,s:sz});}
-    var M=bl.length,par=[];for(i=0;i<M;i++)par[i]=i;var fd=function(a){while(par[a]!==a){par[a]=par[par[a]];a=par[a];}return a;};
-    for(i=0;i<M;i++)for(j=i+1;j<M;j++){var s2=Math.max(bl[i].s,bl[j].s);if(Math.abs(bl[i].s-bl[j].s)<=0.45*s2&&Math.hypot(bl[i].x-bl[j].x,bl[i].y-bl[j].y)<=2.2*s2)par[fd(i)]=fd(j);}
-    var G={};for(i=0;i<M;i++){var r=fd(i);(G[r]=G[r]||[]).push(bl[i]);}
+    /* Zeichen zu Gruppen verbinden; liegen zwei Schriftzüge dicht nebeneinander (z. B. Nummer neben „KNIPEX“),
+       wird eine krumme Gruppe mit strengeren Regeln nochmal aufgeteilt */
+    var grp=function(L,ds,dd){var M=L.length,par=[],a,b;for(a=0;a<M;a++)par[a]=a;var fd=function(z){while(par[z]!==z){par[z]=par[par[z]];z=par[z];}return z;};
+      for(a=0;a<M;a++)for(b=a+1;b<M;b++){var s2=Math.max(L[a].s,L[b].s);if(Math.abs(L[a].s-L[b].s)<=ds*s2&&Math.hypot(L[a].x-L[b].x,L[a].y-L[b].y)<=dd*s2)par[fd(a)]=fd(b);}
+      var G={};for(a=0;a<M;a++){var r=fd(a);(G[r]=G[r]||[]).push(L[a]);}return Object.keys(G).map(function(z){return G[z];});};
+    var linOf=function(g){var cx=0,cy=0;g.forEach(function(b){cx+=b.x;cy+=b.y;});cx/=g.length;cy/=g.length;
+      var sxx=0,syy=0,sxy=0;g.forEach(function(b){var dx=b.x-cx,dy=b.y-cy;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy;});
+      var tr=sxx+syy,det=sxx*syy-sxy*sxy,l1=tr/2+Math.sqrt(Math.max(0,tr*tr/4-det)),l2=tr/2-Math.sqrt(Math.max(0,tr*tr/4-det));return Math.sqrt(Math.max(0,l2)/(l1||1));};
+    var groups=[];
+    grp(bl,0.45,2.2).forEach(function(g){
+      if(g.length>=5&&linOf(g)>0.15){[[0.3,1.8],[0.25,1.5],[0.2,1.3]].some(function(t){var sub=grp(g,t[0],t[1]).filter(function(h){return h.length>=4&&linOf(h)<=0.15;});if(sub.length){sub.forEach(function(h){groups.push(h);});return true;}return false;});}
+      else groups.push(g);});
     var out=[];
-    Object.keys(G).forEach(function(key){var g=G[key];if(g.length<5||g.length>12)return;
+    groups.forEach(function(g){if(g.length<4||g.length>12)return;
       var cx=0,cy=0;g.forEach(function(b){cx+=b.x;cy+=b.y;});cx/=g.length;cy/=g.length;
       var sxx=0,syy=0,sxy=0;g.forEach(function(b){var dx=b.x-cx,dy=b.y-cy;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy;});
-      var tr=sxx+syy,det=sxx*syy-sxy*sxy,l1=tr/2+Math.sqrt(Math.max(0,tr*tr/4-det)),l2=tr/2-Math.sqrt(Math.max(0,tr*tr/4-det));
-      if(Math.sqrt(Math.max(0,l2)/(l1||1))>0.15)return;
+      if(linOf(g)>0.15)return;
       var ang=0.5*Math.atan2(2*sxy,sxx-syy),dxv=Math.cos(ang),dyv=Math.sin(ang),mn=1e9,mx2=-1e9,hs=0;
       g.forEach(function(b){var pr=(b.x-cx)*dxv+(b.y-cy)*dyv;if(pr<mn)mn=pr;if(pr>mx2)mx2=pr;hs+=b.s;});hs/=g.length;
       out.push({n:g.length,cx:cx/k,cy:cy/k,ang:ang,len:(mx2-mn+hs*2.5)/k,h:hs*2.6/k});});
     out.sort(function(a,b){return Math.abs(7-a.n)-Math.abs(7-b.n);});
     return out.slice(0,3).map(function(o){
-      var OH=80,sc=OH/o.h,OW=Math.max(40,Math.round(o.len*sc)),cv=document.createElement("canvas");cv.width=OW;cv.height=OH;var cx2=cv.getContext("2d");
+      var OH=80,sc=OH/o.h,OW=Math.max(40,Math.round(o.len*sc)),cv=document.createElement("canvas");cv.width=OW;cv.height=OH;cv._cx=o.cx;cv._cy=o.cy;var cx2=cv.getContext("2d");
       cx2.fillStyle="#fff";cx2.fillRect(0,0,OW,OH);cx2.imageSmoothingQuality="high";cx2.translate(OW/2,OH/2);cx2.scale(sc,sc);cx2.rotate(-o.ang);cx2.drawImage(src,-o.cx,-o.cy);
       try{var im=cx2.getImageData(0,0,OW,OH),dd=im.data;for(var t=0;t<dd.length;t+=4){var mm=Math.max(dd[t],dd[t+1],dd[t+2]);dd[t]=dd[t+1]=dd[t+2]=mm;}cx2.putImageData(im,0,0);}catch(e){}
       return cv;});
