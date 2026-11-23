@@ -982,27 +982,19 @@ body[data-cat="schuhe"]{--dc:var(--c-schuhe);--dk1:#4a1513;--dk2:#280a09}
 body[data-cat="filament"]{--dc:var(--c-filament);--dk1:#0f2c1b;--dk2:#08150d}
 body[data-cat="werkzeug"]{--dc:var(--c-werkzeug);--dk1:#113c72;--dk2:#0a2347}
 body[data-cat="rezepte"]{--dc:var(--c-rezepte);--dk1:#3b2713;--dk2:#20150a}
-dialog{--bcol:color-mix(in srgb,var(--dc) 40%,transparent);background:linear-gradient(170deg,color-mix(in srgb,var(--dc) 9%,#fbfcfc),color-mix(in srgb,var(--dc) 16%,#eef2f1)) padding-box,var(--run) border-box,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important}
+dialog{--bcol:color-mix(in srgb,var(--dc) 40%,transparent);background:linear-gradient(170deg,color-mix(in srgb,var(--dc) 9%,#fbfcfc),color-mix(in srgb,var(--dc) 16%,#eef2f1)) padding-box,var(--run) border-box 0 0/100% 100% no-repeat,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important}
 #fAdd .acts,#dView .acts{background:linear-gradient(to top,color-mix(in srgb,var(--dc) 16%,#eef2f1) 72%,transparent)!important}
 @media (prefers-color-scheme:dark){
-:root:not([data-theme="light"]) dialog{--bcol:color-mix(in srgb,var(--dc) 45%,transparent);background:linear-gradient(170deg,var(--dk1),var(--dk2)) padding-box,var(--run) border-box,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--dc) 30%,transparent)}
+:root:not([data-theme="light"]) dialog{--bcol:color-mix(in srgb,var(--dc) 45%,transparent);background:linear-gradient(170deg,var(--dk1),var(--dk2)) padding-box,var(--run) border-box 0 0/100% 100% no-repeat,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--dc) 30%,transparent)}
 :root:not([data-theme="light"]) dialog input,:root:not([data-theme="light"]) dialog select,:root:not([data-theme="light"]) dialog textarea{background:rgba(0,0,0,.28)!important;border-color:color-mix(in srgb,var(--dc) 32%,rgba(255,255,255,.1))!important}
 :root:not([data-theme="light"]) #fAdd .acts,:root:not([data-theme="light"]) #dView .acts{background:linear-gradient(to top,var(--dk2) 72%,transparent)!important}
 }
-:root[data-theme="dark"] dialog{--bcol:color-mix(in srgb,var(--dc) 45%,transparent);background:linear-gradient(170deg,var(--dk1),var(--dk2)) padding-box,var(--run) border-box,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--dc) 30%,transparent)}
+:root[data-theme="dark"] dialog{--bcol:color-mix(in srgb,var(--dc) 45%,transparent);background:linear-gradient(170deg,var(--dk1),var(--dk2)) padding-box,var(--run) border-box 0 0/100% 100% no-repeat,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--dc) 30%,transparent)}
 :root[data-theme="dark"] dialog input,:root[data-theme="dark"] dialog select,:root[data-theme="dark"] dialog textarea{background:rgba(0,0,0,.28)!important;border-color:color-mix(in srgb,var(--dc) 32%,rgba(255,255,255,.1))!important}
 :root[data-theme="dark"] #fAdd .acts,:root[data-theme="dark"] #dView .acts{background:linear-gradient(to top,var(--dk2) 72%,transparent)!important}
 dialog :focus-visible{outline-color:var(--dc)!important}
-/* Lauflicht am Fensterrand */
-@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
-@keyframes nxRun{to{--ang:360deg}}
-dialog{--run:linear-gradient(transparent,transparent);border-width:2px!important;border-style:solid!important}
-body[data-lauf] dialog{border-width:3px!important}
-dialog{overflow-x:hidden}
-body[data-lauf="a"] dialog{--run:conic-gradient(from var(--ang),transparent 0deg 300deg,color-mix(in srgb,var(--dc) 90%,transparent) 352deg,#fff 359deg,transparent 360deg);animation:nxRun 4.5s linear infinite}
-body[data-lauf="b"] dialog{--run:conic-gradient(from var(--ang),transparent 0deg 230deg,color-mix(in srgb,var(--dc) 85%,transparent) 345deg,#fff 359deg,transparent 360deg);animation:nxRun 5.5s linear infinite}
-body[data-lauf="c"] dialog{--run:conic-gradient(from var(--ang),transparent 0deg 120deg,color-mix(in srgb,var(--dc) 85%,transparent) 175deg,#fff 179deg,transparent 180deg 300deg,color-mix(in srgb,var(--dc) 85%,transparent) 355deg,#fff 359deg,transparent 360deg);animation:nxRun 7s linear infinite}
-@media (prefers-reduced-motion:reduce){body[data-lauf] dialog{animation:none}}
+/* Lauflicht am Fensterrand: zwei Linien im gleichmäßigen Tempo (Bild wird per JS passend zur Fenstergröße erzeugt) */
+dialog{--run:none;border-width:3px!important;border-style:solid!important;overflow-x:hidden}
 dialog .primary{background:var(--dc)!important;border-color:var(--dc)!important;color:#0b0f12!important}
 #fAdd .acts,#dView .acts{padding-bottom:12px!important}
 /* Kategorie löschen: klein, unauffällig, ganz rechts */
@@ -3824,6 +3816,53 @@ body .tpanel .tval{color:#c3d0c9}
     }).catch(function(){});
   }
   ltdLoad();
+  /* ---------- Lauflicht am Fensterrand: zwei ausfadende Linien, konstantes Tempo ---------- */
+  (function(){
+    var P=window.HTMLDialogElement&&HTMLDialogElement.prototype;if(!P||!window.ResizeObserver||!window.MutationObserver)return;
+    var V=280,K=12,T0=performance.now(),rm=window.matchMedia?matchMedia("(prefers-reduced-motion: reduce)"):null;
+    function f(n){return Math.round(n*100)/100;}
+    function svg(W,H,b,r,col,at){
+      var i=b/2,x0=i,y0=i,x1=W-i,y1=H-i,q=Math.max(0,Math.min(r-i,(x1-x0)/2,(y1-y0)/2));
+      var A=function(x,y){return "A"+f(q)+" "+f(q)+" 0 0 1 "+f(x)+" "+f(y);};
+      var d="M"+f(x0+q)+" "+f(y0)+"H"+f(x1-q)+A(x1,y0+q)+"V"+f(y1-q)+A(x1-q,y1)+"H"+f(x0+q)+A(x0,y1-q)+"V"+f(y0+q)+A(x0+q,y0)+"Z";
+      var L=2*(x1-x0-2*q)+2*(y1-y0-2*q)+2*Math.PI*q,T=L/V,tail=Math.max(90,Math.min(240,L*.1));
+      var s0=(V*(at!=null?at:(performance.now()-T0)/1000))%L;
+      /* Schweif aus K Lagen: vorne kräftig, hinten ausfadend; dazu ein heller Kopf */
+      var lay=[],tau=[],j;
+      for(j=1;j<=K;j++)tau[j]=1-.9*(1-(j-1)/K);tau[K+1]=1;
+      for(j=1;j<=K;j++)lay.push([tail*j/K,col,1-tau[j]/tau[j+1],"butt"]);
+      lay.push([16,"#fff",.35,"round"],[6,"#fff",.85,"round"]);
+      var out="";
+      [0,L/2].forEach(function(sh){
+        var h=s0+sh;
+        lay.forEach(function(l){
+          var o=(((l[0]-h)%L)+L)%L;
+          out+="<path d='"+d+"' fill='none' stroke='"+l[1]+"' stroke-opacity='"+f(l[2])+"' stroke-width='"+b+"' stroke-linecap='"+l[3]+"' stroke-dasharray='"+f(l[0])+" "+f(L-l[0])+"' stroke-dashoffset='"+f(o)+"'>"+
+            (at!=null?"":"<animate attributeName='stroke-dashoffset' from='"+f(o)+"' to='"+f(o-L)+"' dur='"+f(T)+"s' repeatCount='indefinite'/>")+"</path>";
+        });
+      });
+      return "<svg xmlns='http://www.w3.org/2000/svg' width='"+W+"' height='"+H+"' viewBox='0 0 "+W+" "+H+"'>"+out+"</svg>";
+    }
+    function run(d,force){
+      if(!d.open||(rm&&rm.matches)){if(d._nxk){d.style.removeProperty("--run");d._nxk="";}return;}
+      var W=d.offsetWidth,H=d.offsetHeight;if(W<40||H<40)return;
+      var cs=getComputedStyle(d),b=parseFloat(cs.borderTopWidth)||0,r=parseFloat(cs.borderTopLeftRadius)||0;if(b<1)return;
+      var col=(cs.getPropertyValue("--dc")||"").trim();if(!/^(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))$/.test(col))col="#4fb39a";
+      var at=window.__nxRunAt,key=W+"x"+H+"|"+b+"|"+r+"|"+col+"|"+(at!=null?at:"");
+      if(!force&&d._nxk===key)return;d._nxk=key;
+      d.style.setProperty("--run",'url("data:image/svg+xml,'+encodeURIComponent(svg(W,H,b,r,col,at))+'")');
+    }
+    function all(){document.querySelectorAll("dialog[open]").forEach(function(d){run(d,1);});}
+    var ro=new ResizeObserver(function(es){es.forEach(function(e){run(e.target);});});
+    var mo=new MutationObserver(function(ms){ms.forEach(function(m){run(m.target);});});
+    function hook(d){if(d._nxh)return;d._nxh=1;ro.observe(d);mo.observe(d,{attributes:true,attributeFilter:["open"]});}
+    ["showModal","show"].forEach(function(n){var o=P[n];if(typeof o!=="function")return;P[n]=function(){hook(this);var x=o.apply(this,arguments);run(this);return x;};});
+    document.querySelectorAll("dialog").forEach(function(d){hook(d);run(d);});
+    new MutationObserver(function(){setTimeout(all,0);}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+    new MutationObserver(function(){setTimeout(all,0);}).observe(document.body,{attributes:true,attributeFilter:["data-cat","style"]});
+    if(rm&&rm.addEventListener)rm.addEventListener("change",all);
+    window.__nxRun=run;
+  })();
   applyLang();
   fitTitle();
   /* Schnittstelle für Konto-Modul (account.js) */
