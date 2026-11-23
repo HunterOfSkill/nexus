@@ -863,6 +863,13 @@ main{position:relative}
 .nxvis em{align-self:flex-start;font-style:normal;font-weight:800;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:999px;color:#1a1204;background:linear-gradient(180deg,#ffd98a,#e9a23b);box-shadow:0 1px 4px rgba(0,0,0,.4)}
 .nxvis[hidden]{display:none}
 @media (min-width:640px){.nxvis{top:0}body.hasvis .top{padding-top:96px}}
+/* Werkzeug: limitierte Editionen */
+.chip.ltd{background:linear-gradient(180deg,#ffe29a,#e6a93b);color:#2a1a02;border-color:rgba(255,220,140,.9);font-weight:700}
+.chip.ltd i{color:#2a1a02}
+.ltdh{margin-top:8px;padding:8px 10px;border-radius:12px;background:rgba(230,169,59,.2);border:1px solid rgba(214,150,40,.7);color:inherit;font-weight:600}
+.ltdh button{color:inherit;font-weight:500}
+.ltdb{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ltdb button{font-size:.8rem}
 /* Filament: Stückzahl +/- und NFC */
 .vlogo{left:12px;bottom:12px;height:52px;max-width:40%}
 .vlogo.cut{height:44px}
@@ -1183,7 +1190,7 @@ body .tpanel .tval{color:#c3d0c9}
       ["zeitraum","Veröffentlichungszeitraum","Release period"],["limitiert","Limitierte Auflage","Limited edition",YN]],
     filament:[["material","Material","Material",[["pla","PLA","PLA"],["pla+","PLA+ / Pro","PLA+ / Pro"],["pla-matt","PLA Matt","PLA Matt"],["pla-silk","PLA Silk","PLA Silk"],["pla-hs","PLA High Speed","PLA High Speed"],["pla-cf","PLA-CF (Carbon)","PLA-CF (Carbon)"],["pla-wood","PLA Holz","PLA Wood"],["pla-marble","PLA Marmor","PLA Marble"],["pla-glow","PLA Glow (nachleuchtend)","PLA Glow (glow in the dark)"],["pla-metal","PLA Metall-gefüllt","PLA metal-filled"],["pla-glitter","PLA Glitzer / Sparkle","PLA Glitter / Sparkle"],["pla-multi","PLA Multicolor / Rainbow","PLA Multicolor / Rainbow"],["pla-tough","Tough PLA","Tough PLA"],["petg","PETG","PETG"],["petg-hf","PETG High Flow","PETG High Flow"],["petg-cf","PETG-CF (Carbon)","PETG-CF (Carbon)"],["petg-trans","PETG Transparent","PETG Transparent"],["pet","PET","PET"],["pcTg","PCTG","PCTG"],["cpe","CPE","CPE"],["abs","ABS","ABS"],["abs+","ABS+","ABS+"],["abs-gf","ABS-GF (Glasfaser)","ABS-GF (glass fiber)"],["asa","ASA","ASA"],["asa-cf","ASA-CF","ASA-CF"],["hips","HIPS","HIPS"],["tpu95","TPU 95A","TPU 95A"],["tpu90","TPU 90A","TPU 90A"],["tpu85","TPU 85A","TPU 85A"],["tpu64d","TPU 64D","TPU 64D"],["tpe","TPE","TPE"],["tpc","TPC","TPC"],["pa","Nylon (PA)","Nylon (PA)"],["pa6","PA6","PA6"],["pa12","PA12","PA12"],["pa6-cf","PA6-CF / PAHT-CF","PA6-CF / PAHT-CF"],["pa-gf","PA-GF (Glasfaser)","PA-GF (glass fiber)"],["ppa-cf","PPA-CF","PPA-CF"],["pc","PC (Polycarbonat)","PC (Polycarbonat)"],["pc-abs","PC-ABS","PC-ABS"],["pc-cf","PC-CF","PC-CF"],["pc-fr","PC-FR (flammhemmend)","PC-FR (flame retardant)"],["pp","PP (Polypropylen)","PP (Polypropylene)"],["pp-gf","PP-GF","PP-GF"],["pe","PE / HDPE","PE / HDPE"],["pom","POM","POM"],["pmma","PMMA (Acryl)","PMMA (Acrylic)"],["pvb","PVB","PVB"],["pva","PVA (wasserlöslich)","PVA (water-soluble)"],["bvoh","BVOH (wasserlöslich)","BVOH (water-soluble)"],["support","Stützmaterial (Break-away)","Support (Break-away)"],["peek","PEEK","PEEK"],["pekk","PEKK","PEKK"],["pei","PEI / ULTEM","PEI / ULTEM"],["pps","PPS","PPS"],["psu","PSU / PPSU","PSU / PPSU"],["esd","ESD / leitfähig","ESD / conductive"],["conductive","Leitfähig (Elektronik)","Conductive (Elektronik)"],["magnetic","Magnetisch (Eisen-gefüllt)","Magnetic (iron-filled)"],["ceramic","Keramik-gefüllt","Ceramic-filled"],["metal","Metall (Stahl/Kupfer/Bronze-gefüllt)","Metal (steel/copper/bronze-filled)"],["wax","Wachs (Feinguss)","Wax (investment casting)"],["other","Sonstiges","Other"]]],["marke","Marke","Brand"],["farbe","Farbe","Color"],
       ["gewicht","Gewicht (g)","Weight (g)",null,"number","1"],["stueck","Stückzahl","Quantity",null,"number","1"],["preis","Preis (€)","Price (€)",null,"number","0.01"]],
-    werkzeug:[["hersteller","Hersteller","Brand"],["artnr","Artikelnummer","Item number"],["typ","Zangenart / Werkzeug","Type",[["wapu","Wasserpumpenzange","Water pump pliers"],["zangenschl","Zangenschlüssel","Pliers wrench"],["kombi","Kombizange","Combination pliers"],["kraftkombi","Kraft-Kombizange","High leverage combination pliers"],["spitzkombi","Spitz-Kombizange","Needle-nose combination pliers"],["elektro","Elektro-Installationszange","Installation pliers"],["seiten","Seitenschneider","Diagonal cutter"],["kraftseiten","Kraft-Seitenschneider","High leverage diagonal cutter"],["elektronik","Elektronik-Seitenschneider","Electronics cutter"],["vorn","Vornschneider","End cutting nippers"],["bolzen","Bolzenschneider","Bolt cutter"],["kabelschere","Kabelschere / Kabelschneider","Cable shears"],["schere","Elektrikerschere","Electricians\u2019 shears"],["flach","Flachzange","Flat nose pliers"],["rund","Rundzange","Round nose pliers"],["storch","Flachrundzange (Storchschnabel)","Snipe nose pliers"],["langbeck","Langbeckzange","Long nose pliers"],["greif","Greifzange","Gripping pliers"],["mechaniker","Mechanikerzange","Mechanics pliers"],["sicherung","Sicherungsringzange","Circlip pliers"],["abisolier","Abisolierzange","Wire stripper"],["abmantel","Abmantelungswerkzeug","Dismantling tool"],["crimp","Crimpzange","Crimping pliers"],["monier","Monierzange","Concreters nippers"],["sonst","Sonstiges Werkzeug","Other tool"]]],["groesse","Größe (mm)","Size (mm)",null,"number","1"],["preis","Preis (€)","Price (€)",null,"number","0.01"]],
+    werkzeug:[["hersteller","Hersteller","Brand"],["artnr","Artikelnummer","Item number"],["edition","Limitierte Edition","Limited edition"],["edjahr","Editionsjahr","Edition year",null,"number","1"],["typ","Zangenart / Werkzeug","Type",[["wapu","Wasserpumpenzange","Water pump pliers"],["zangenschl","Zangenschlüssel","Pliers wrench"],["kombi","Kombizange","Combination pliers"],["kraftkombi","Kraft-Kombizange","High leverage combination pliers"],["spitzkombi","Spitz-Kombizange","Needle-nose combination pliers"],["elektro","Elektro-Installationszange","Installation pliers"],["seiten","Seitenschneider","Diagonal cutter"],["kraftseiten","Kraft-Seitenschneider","High leverage diagonal cutter"],["elektronik","Elektronik-Seitenschneider","Electronics cutter"],["vorn","Vornschneider","End cutting nippers"],["bolzen","Bolzenschneider","Bolt cutter"],["kabelschere","Kabelschere / Kabelschneider","Cable shears"],["schere","Elektrikerschere","Electricians\u2019 shears"],["flach","Flachzange","Flat nose pliers"],["rund","Rundzange","Round nose pliers"],["storch","Flachrundzange (Storchschnabel)","Snipe nose pliers"],["langbeck","Langbeckzange","Long nose pliers"],["greif","Greifzange","Gripping pliers"],["mechaniker","Mechanikerzange","Mechanics pliers"],["sicherung","Sicherungsringzange","Circlip pliers"],["abisolier","Abisolierzange","Wire stripper"],["abmantel","Abmantelungswerkzeug","Dismantling tool"],["crimp","Crimpzange","Crimping pliers"],["monier","Monierzange","Concreters nippers"],["sonst","Sonstiges Werkzeug","Other tool"]]],["groesse","Größe (mm)","Size (mm)",null,"number","1"],["preis","Preis (€)","Price (€)",null,"number","0.01"]],
     rezepte:[["gang","Gang / Art","Course",[["fruehstueck","Frühstück","Breakfast"],["vorspeise","Vorspeise","Starter"],["suppe","Suppe","Soup"],["salat","Salat","Salad"],["haupt","Hauptgericht","Main course"],["beilage","Beilage","Side dish"],["dessert","Dessert","Dessert"],["backen","Backen / Kuchen","Baking / Cake"],["brot","Brot","Bread"],["snack","Snack","Snack"],["sosse","Soße / Dip","Sauce / Dip"],["getraenk","Getränk","Drink"]]],["kueche","Küche","Cuisine"],["zeit","Zubereitungszeit (min)","Time (min)",null,"number","1"],["portionen","Portionen","Servings",null,"number","1"],["schwierigkeit","Schwierigkeit","Difficulty",[["leicht","Leicht","Easy"],["mittel","Mittel","Medium"],["schwer","Anspruchsvoll","Advanced"]]],["quelle","Quelle","Source"],
       ["zutaten","Zutaten (eine pro Zeile)","Ingredients (one per line)",null,"area"],["schritte","Zubereitung (ein Schritt pro Zeile)","Method (one step per line)",null,"area"]]
   };
@@ -1293,6 +1300,7 @@ body .tpanel .tval{color:#c3d0c9}
       if(d.schwierigkeit)ch("📊",ol("schwierigkeit"));
       if(d.kueche)ch("🌍",d.kueche);
     }else if(c==="werkzeug"){
+      if(d.edition){var le=KNIPEX_LTD.filter(function(e){return e.n===d.edition;})[0];ch("★",(le?le.k:d.edition)+(d.edjahr?" "+d.edjahr:""),"ltd");}
       if(d.typ)ch("🔧",ol("typ"),"hi");
       if(d.groesse)ch("📏",d.groesse+" mm");
       if(d.hersteller)ch("🏷",d.hersteller);
@@ -1674,6 +1682,10 @@ body .tpanel .tval{color:#c3d0c9}
       else if(f[4]==="area")h+='<textarea id="f-'+f[0]+'" rows="'+(f[0]==="schritte"?7:5)+'" placeholder="'+esc(f[0]==="zutaten"?(lang==="de"?"200 g Mehl\n2 Eier\n1 Prise Salz":"200 g flour\n2 eggs"):(lang==="de"?"Ofen auf 180 °C vorheizen\nTeig rühren …":"Preheat oven …"))+'">'+esc(dv[f[0]]||"")+'</textarea>';
       else if(c==="rezepte"&&f[0]==="kueche")h+='<input id="f-kueche" list="dl-kueche" autocomplete="off" value="'+esc(dv.kueche||"")+'"><datalist id="dl-kueche">'+["Deutsch","Italienisch","Französisch","Spanisch","Griechisch","Türkisch","Asiatisch","Chinesisch","Japanisch","Thailändisch","Indisch","Mexikanisch","Amerikanisch","Vegetarisch","Vegan"].map(function(v){return '<option value="'+v+'">';}).join("")+'</datalist>';
       else if(c==="werkzeug"&&f[0]==="hersteller")h+='<input id="f-hersteller" list="dl-wzh" autocomplete="off" value="'+esc(dv.hersteller||"")+'" placeholder="KNIPEX"><datalist id="dl-wzh"><option value="Knipex"><option value="Wera"><option value="Wiha"><option value="Gedore"><option value="Hazet"><option value="Stahlwille"><option value="Bahco"><option value="Facom"><option value="Würth"><option value="Milwaukee"></datalist>';
+      else if(c==="werkzeug"&&f[0]==="edition"){var ec=dv.edition||"",eh=false,eo="";
+        KNIPEX_LTD.forEach(function(e,i){var lb=e.n+(e.j?" ("+e.j+")":"");if(ec===e.n)eh=true;eo+='<option value="'+i+'"'+(ec===e.n?' selected':'')+'>'+esc(lb)+'</option>';});
+        h+='<select id="f-edsel"><option value="">'+(lang==="de"?"– keine (normale Ausführung)":"– none (standard)")+'</option>'+eo+'<option value="other"'+(ec&&!eh?' selected':'')+'>'+(lang==="de"?"Andere Edition …":"Other edition …")+'</option></select>'+
+          '<input id="f-edition" autocomplete="off" placeholder="'+esc(lang==="de"?"Name der Edition":"Edition name")+'" value="'+esc(ec)+'"'+(ec&&!eh?'':' hidden')+' style="margin-top:8px">';}
       else if(c==="werkzeug"&&f[0]==="artnr")h+='<input id="f-artnr" autocomplete="off" inputmode="numeric" value="'+esc(dv.artnr||"")+'" placeholder="'+esc(lang==="de"?"z. B. 87 01 250":"e.g. 87 01 250")+'"><small class="fhint">'+esc(lang==="de"?"Steht eingeprägt an der Zange – Zangenart und Größe werden daraus automatisch eingetragen.":"Stamped on the pliers – type and size are filled in automatically.")+'</small>';
       else if(c==="pflanzen"&&f[0]==="giessen"){var gv=parseInt(dv.giessen,10)||wDef(dv.wasser);
         h+='<div class="wform"><input id="f-giessen" type="range" min="1" max="60" step="1" value="'+gv+'"'+(dv.giessen?' data-set="1"':'')+'><b id="f-giessen-l">'+esc(wIvTxt(gv))+'</b></div>'+
@@ -1950,10 +1962,22 @@ body .tpanel .tval{color:#c3d0c9}
         if(r.nr&&wA&&(!wA.value||wA.dataset.auto)){wA.value=r.nr;wA.dataset.auto="1";did.push(lang==="de"?"Artikelnummer":"Item no.");}
         var tl=r.typ?optLabel(fieldOf("werkzeug","typ"),r.typ):"";
         wSet((src?'📷 ':'')+'<b>KNIPEX '+esc(r.nr||"")+'</b>'+(tl?' → '+esc(tl):'')+(r.mm?' · '+r.mm+' mm':'')+(did.length?'<br>'+esc((lang==="de"?"Eingetragen: ":"Filled in: ")+did.join(", ")):''));
+        if(r.nr)ltdHint(r.nr);
       };
+      var eS=document.getElementById("f-edsel"),eT=document.getElementById("f-edition"),eJ=document.getElementById("f-edjahr");
+      var eSet=function(e){if(!eS)return;if(e){var i=KNIPEX_LTD.indexOf(e);eS.value=String(i);eT.value=e.n;eT.hidden=true;if(eJ)eJ.value=e.j||"";}else{eS.value="";eT.value="";eT.hidden=true;if(eJ)eJ.value="";}};
+      if(eS)eS.addEventListener("change",function(){var v=eS.value;
+        if(v==="other"){eT.hidden=false;eT.value="";eT.focus();return;}
+        var e=v===""?null:KNIPEX_LTD[+v];eSet(e);
+        if(e&&wA){var b=ltdBase(wA.value);if(!b||b===e.nr){wA.value=e.nr+" "+e.sx;delete wA.dataset.auto;}}
+        if(e){var r=knipexParse(e.nr);if(r){r.nr=e.nr;wFill(r,false);}}});
+      /* Hinweis, wenn es zur erkannten Nummer limitierte Editionen gibt */
+      var ltdHint=function(nr){if(!wH||!eS||eS.value)return;var L=ltdFor(nr);if(!L.length)return;var de=lang==="de";
+        wH.insertAdjacentHTML("beforeend",'<div class="ltdh">★ '+esc(de?"Diese Zange gab es auch als limitierte Edition – ist es eine davon?":"This tool also came as a limited edition – is it one of these?")+'<div class="ltdb">'+L.map(function(e){return '<button type="button" class="ghost onlb" data-ltd="'+KNIPEX_LTD.indexOf(e)+'">'+esc(e.n+(e.j?" · "+e.j:""))+'</button>';}).join("")+'</div></div>');};
+      if(wH)wH.addEventListener("click",function(e){var b=e.target.closest("[data-ltd]");if(!b)return;var ed=KNIPEX_LTD[+b.getAttribute("data-ltd")];eSet(ed);if(wA){wA.value=ed.nr+" "+ed.sx;delete wA.dataset.auto;}var x=wH.querySelector(".ltdh");if(x)x.innerHTML="★ "+esc((lang==="de"?"Edition eingetragen: ":"Edition set: ")+ed.n+(ed.j?" · "+ed.j:""));});
       if(wT)wT.addEventListener("change",function(){delete wT.dataset.auto;});
       if(wG)wG.addEventListener("input",function(){delete wG.dataset.auto;});
-      if(wA)wA.addEventListener("input",function(){delete wA.dataset.auto;var r=knipexParse(wA.value);if(r)wFill(r,false);});
+      if(wA)wA.addEventListener("input",function(){delete wA.dataset.auto;var ed=ltdBySuffix(wA.value);if(ed)eSet(ed);var r=knipexParse(wA.value);if(r)wFill(r,false);});
       if(wM)wM.addEventListener("input",function(){delete wM.dataset.auto;});
       /* Neues Hauptbild: automatisch eingetragene Werte gelten nicht mehr */
       var wClear=function(){[wA,wT,wG,wM].forEach(function(x){if(x&&x.dataset.auto){x.value="";delete x.dataset.auto;}});};
@@ -3262,7 +3286,21 @@ body .tpanel .tval{color:#c3d0c9}
   })();
   /* ---------- Werkzeug: KNIPEX-Artikelnummer → Zangenart + Länge ---------- */
   /* Aufbau der KNIPEX-Nummer: Serie (2 Ziffern) · Ausführung (2) · Länge in mm (3), z. B. 87 01 250 = Cobra 250 mm */
-  var KNIPEX={"01":"kombi","02":"kraftkombi","03":"kombi","08":"spitzkombi","09":"kombi","11":"abisolier","12":"abisolier","13":"elektro","16":"abmantel","20":"flach","22":"rund","25":"storch","26":"storch","30":"langbeck","35":"greif","38":"mechaniker","44":"sicherung","45":"sicherung","46":"sicherung","48":"sicherung","49":"sicherung","68":"vorn","70":"seiten","71":"bolzen","72":"seiten","74":"kraftseiten","77":"elektronik","78":"elektronik","79":"elektronik","86":"zangenschl","87":"wapu","88":"wapu","89":"wapu","95":"kabelschere","97":"crimp","99":"monier"};
+  var KNIPEX={"82":"greif","01":"kombi","02":"kraftkombi","03":"kombi","08":"spitzkombi","09":"kombi","11":"abisolier","12":"abisolier","13":"elektro","16":"abmantel","20":"flach","22":"rund","25":"storch","26":"storch","30":"langbeck","35":"greif","38":"mechaniker","44":"sicherung","45":"sicherung","46":"sicherung","48":"sicherung","49":"sicherung","68":"vorn","70":"seiten","71":"bolzen","72":"seiten","74":"kraftseiten","77":"elektronik","78":"elektronik","79":"elektronik","86":"zangenschl","87":"wapu","88":"wapu","89":"wapu","95":"kabelschere","97":"crimp","99":"monier"};
+  /* Bekannte limitierte KNIPEX-Editionen (Grundnummer steht auf der Zange, die Edition erkennt man an Farbe/Verpackung) */
+  var KNIPEX_LTD=[
+    {nr:"87 00 100",sx:"XMAS",n:"Cobra XS Christbaumkugel",j:2022,k:"Christbaumkugel"},
+    {nr:"86 01 180",sx:"XMAS",n:"Zangenschlüssel Weihnachts-Edition (schwarz/gold)",j:2023,k:"Weihnachts-Edition"},
+    {nr:"87 99 180",sx:"S01",n:"Cobra Bi-Color (weiße Verpackung)",j:2024,k:"Bi-Color"},
+    {nr:"87 99 180",sx:"S02",n:"Cobra Bi-Color (schwarze Verpackung)",j:2024,k:"Bi-Color"},
+    {nr:"82 01 200",sx:"S02",n:"TwinGrip Weihnachts-Edition (grau/bronze)",j:2025,k:"Weihnachts-Edition"},
+    {nr:"08 22 185",sx:"S01",n:"Spitz-Kombizange Limited Edition 2026 (1 von 3)",j:2026,k:"Edition 1 von 3"},
+    {nr:"70 02 160",sx:"S8",n:"Seitenschneider „We Forge Winners“",j:2026,k:"We Forge Winners"},
+    {nr:"86 01 180",sx:"S01",n:"Zangenschlüssel „Flash Green“",j:0,k:"Flash Green"}
+  ];
+  function ltdBase(nr){var m=String(nr||"").replace(/\D/g,"").slice(0,7);return m.length===7?m.slice(0,2)+" "+m.slice(2,4)+" "+m.slice(4):"";}
+  function ltdFor(nr){var b=ltdBase(nr);return b?KNIPEX_LTD.filter(function(e){return e.nr===b;}):[];}
+  function ltdBySuffix(txt){var t=String(txt||"").toUpperCase().replace(/[\s.\-]/g,""),b=ltdBase(txt);if(!b)return null;return KNIPEX_LTD.filter(function(e){return e.nr===b&&t.indexOf(e.nr.replace(/ /g,"")+e.sx)===0;})[0]||null;}
   function knipexParse(txt){
     var t=" "+String(txt||"").replace(/[Oo](?=\d)|(?<=\d)[Oo]/g,"0").replace(/[Il|](?=\d)|(?<=\d)[Il|]/g,"1")+" ",m,re=/(?:^|[^\d])(\d{2})[\s.\-]?(\d{2})[\s.\-]?(\d{3})(?!\d)/g,best=null;
     while((m=re.exec(t))){var mm=parseInt(m[3],10),ser=m[1],sub=m[2];if(!KNIPEX[ser]&&/^[689]/.test(ser)&&KNIPEX["0"+ser[1]])ser="0"+ser[1];m[1]=ser;if(mm>=80&&mm<=1000&&(KNIPEX[ser]||!best)){best={nr:m[1]+" "+m[2]+" "+m[3],typ:(ser+sub==="9505"?"schere":KNIPEX[ser])||"",mm:mm};if(KNIPEX[ser])break;}}
