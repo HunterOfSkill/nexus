@@ -972,6 +972,39 @@ body[data-cat="messer"] #forge{display:block}
 /* Fenster immer gut lesbar – unabhängig vom Transparenz-Regler */
 dialog{background:color-mix(in srgb,var(--surface) 95%,transparent)!important;-webkit-backdrop-filter:blur(22px) saturate(1.15)!important;backdrop-filter:blur(22px) saturate(1.15)!important}
 #fAdd .acts,#dView .acts{background:linear-gradient(to top,var(--surface) 70%,color-mix(in srgb,var(--surface) 0%,transparent))!important;padding-top:22px!important}
+/* Fenster in der Farbe der jeweiligen Kategorie */
+body{--dc:var(--cc,var(--accent));--dk1:color-mix(in srgb,var(--dc) 24%,#0c1013);--dk2:color-mix(in srgb,var(--dc) 12%,#080b0d)}
+body[data-cat="alle"]{--dc:#e58a45;--dk1:#2b221c;--dk2:#161210}
+body[data-cat="messer"]{--dc:var(--c-messer);--dk1:#2f1b11;--dk2:#180e09}
+body[data-cat="pflanzen"]{--dc:var(--c-pflanzen);--dk1:#153723;--dk2:#0b1f14}
+body[data-cat="filme"]{--dc:var(--c-filme);--dk1:#261e48;--dk2:#140f28}
+body[data-cat="schuhe"]{--dc:var(--c-schuhe);--dk1:#4a1513;--dk2:#280a09}
+body[data-cat="filament"]{--dc:var(--c-filament);--dk1:#0f2c1b;--dk2:#08150d}
+body[data-cat="werkzeug"]{--dc:var(--c-werkzeug);--dk1:#113c72;--dk2:#0a2347}
+body[data-cat="rezepte"]{--dc:var(--c-rezepte);--dk1:#3b2713;--dk2:#20150a}
+dialog{--bcol:color-mix(in srgb,var(--dc) 40%,transparent);background:linear-gradient(170deg,color-mix(in srgb,var(--dc) 9%,#fbfcfc),color-mix(in srgb,var(--dc) 16%,#eef2f1)) padding-box,var(--run) border-box,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important}
+#fAdd .acts,#dView .acts{background:linear-gradient(to top,color-mix(in srgb,var(--dc) 16%,#eef2f1) 72%,transparent)!important}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) dialog{--bcol:color-mix(in srgb,var(--dc) 45%,transparent);background:linear-gradient(170deg,var(--dk1),var(--dk2)) padding-box,var(--run) border-box,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--dc) 30%,transparent)}
+:root:not([data-theme="light"]) dialog input,:root:not([data-theme="light"]) dialog select,:root:not([data-theme="light"]) dialog textarea{background:rgba(0,0,0,.28)!important;border-color:color-mix(in srgb,var(--dc) 32%,rgba(255,255,255,.1))!important}
+:root:not([data-theme="light"]) #fAdd .acts,:root:not([data-theme="light"]) #dView .acts{background:linear-gradient(to top,var(--dk2) 72%,transparent)!important}
+}
+:root[data-theme="dark"] dialog{--bcol:color-mix(in srgb,var(--dc) 45%,transparent);background:linear-gradient(170deg,var(--dk1),var(--dk2)) padding-box,var(--run) border-box,linear-gradient(var(--bcol),var(--bcol)) border-box!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--dc) 30%,transparent)}
+:root[data-theme="dark"] dialog input,:root[data-theme="dark"] dialog select,:root[data-theme="dark"] dialog textarea{background:rgba(0,0,0,.28)!important;border-color:color-mix(in srgb,var(--dc) 32%,rgba(255,255,255,.1))!important}
+:root[data-theme="dark"] #fAdd .acts,:root[data-theme="dark"] #dView .acts{background:linear-gradient(to top,var(--dk2) 72%,transparent)!important}
+dialog :focus-visible{outline-color:var(--dc)!important}
+/* Lauflicht am Fensterrand */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes nxRun{to{--ang:360deg}}
+dialog{--run:linear-gradient(transparent,transparent);border-width:2px!important;border-style:solid!important}
+body[data-lauf] dialog{border-width:3px!important}
+dialog{overflow-x:hidden}
+body[data-lauf="a"] dialog{--run:conic-gradient(from var(--ang),transparent 0deg 300deg,color-mix(in srgb,var(--dc) 90%,transparent) 352deg,#fff 359deg,transparent 360deg);animation:nxRun 4.5s linear infinite}
+body[data-lauf="b"] dialog{--run:conic-gradient(from var(--ang),transparent 0deg 230deg,color-mix(in srgb,var(--dc) 85%,transparent) 345deg,#fff 359deg,transparent 360deg);animation:nxRun 5.5s linear infinite}
+body[data-lauf="c"] dialog{--run:conic-gradient(from var(--ang),transparent 0deg 120deg,color-mix(in srgb,var(--dc) 85%,transparent) 175deg,#fff 179deg,transparent 180deg 300deg,color-mix(in srgb,var(--dc) 85%,transparent) 355deg,#fff 359deg,transparent 360deg);animation:nxRun 7s linear infinite}
+@media (prefers-reduced-motion:reduce){body[data-lauf] dialog{animation:none}}
+dialog .primary{background:var(--dc)!important;border-color:var(--dc)!important;color:#0b0f12!important}
+#fAdd .acts,#dView .acts{padding-bottom:12px!important}
 /* Kategorie löschen: klein, unauffällig, ganz rechts */
 .tools .tdel{order:99;margin-left:auto;padding:0;width:30px;height:30px;justify-content:center;gap:0;opacity:.55;border-color:rgba(255,255,255,.18)!important;color:#e8a3a3!important;background:rgba(14,24,19,.3)!important;align-self:center}
 .tools .tdel:hover,.tools .tdel:focus-visible{opacity:1}
