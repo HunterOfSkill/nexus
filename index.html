@@ -4142,14 +4142,29 @@ async function maybeMigrate(uid) {
 /* ---------- Besucherzähler ----------
    Jeder Besuch wird anonym gezählt (eine zufällige Geräte-Kennung, keine Namen oder E-Mails).
    Lesen darf die Zahlen laut Firestore-Regeln nur das Konto des Seiten-Besitzers – alle anderen sehen nichts. */
-function visTrack() {
+function visTrack(u) {
   try {
-    const f = FB.fs; let did = localStorage.getItem("nx-did"), isNew = false;
-    if (!did) { did = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem("nx-did", did); isNew = true; }
-    if (sessionStorage.getItem("nx-vis")) return; sessionStorage.setItem("nx-vis", "1");
-    const v = { last: f.serverTimestamp(), n: f.increment(1) }; if (isNew) v.first = f.serverTimestamp();
-    f.setDoc(f.doc(fdb, "visits", did), v, { merge: true }).catch(() => {});
+    if (localStorage.getItem("nx-admin")) return;            /* Admin-Geräte zählen nie mit */
+    const f = FB.fs; let did = localStorage.getItem("nx-did");
+    if (!did) { did = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem("nx-did", did); }
+    const id = u ? "u_" + u.uid : did;                        /* angemeldet: eine Person = ein Besucher, egal welches Gerät */
+    if (sessionStorage.getItem("nx-vis")) return; sessionStorage.setItem("nx-vis", id);
+    const known = localStorage.getItem("nx-vk-" + id); localStorage.setItem("nx-vk-" + id, "1");
+    const v = { last: f.serverTimestamp(), n: f.increment(1) }; if (!known) v.first = f.serverTimestamp();
+    f.setDoc(f.doc(fdb, "visits", id), v, { merge: true }).catch(() => {});
     f.setDoc(f.doc(fdb, "stats", "total"), { n: f.increment(1) }, { merge: true }).catch(() => {});
+  } catch (e) {}
+}
+/* Admin erkannt: eigene Besuche wieder herausnehmen und dieses Gerät künftig nicht mehr zählen */
+async function visForgetMe(u) {
+  try {
+    const f = FB.fs, ids = []; let did = localStorage.getItem("nx-did"); if (did) ids.push(did); ids.push("u_" + u.uid);
+    let views = 0;
+    for (const id of ids) {
+      const r = f.doc(fdb, "visits", id), d = await f.getDocFromServer(r).catch(() => null);
+      if (d && d.exists()) { views += d.data().n || 0; await f.deleteDoc(r).catch(() => {}); }
+    }
+    if (views) await f.setDoc(f.doc(fdb, "stats", "total"), { n: f.increment(-views) }, { merge: true }).catch(() => {});
   } catch (e) {}
 }
 async function visShow() {
@@ -4165,10 +4180,13 @@ async function visShow() {
     el.innerHTML = '<em>★ Admin</em><div><b>👁 ' + fmt(n) + '</b> <span>' + (de ? "Besucher" : "visitors") + '</span></div><div><b>' + fmt(t) + '</b> <span>' + (de ? "heute" : "today") + '</span> · <b>' + fmt(v) + '</b> <span>' + (de ? "Aufrufe" : "views") + "</span></div>";
     el.title = de ? "Nur für dich sichtbar" : "Only visible to you";
     el.hidden = false;
+    if (!localStorage.getItem("nx-admin")) { localStorage.setItem("nx-admin", "1"); await visForgetMe(user0); visShow(); }
   } catch (e) { el.hidden = true; }
 }
 let visTimer = null;
+let user0 = null;
 function visOwner(u) {
+  user0 = u;
   const el = $("nxVis"); if (!el) return;
   clearInterval(visTimer); el.hidden = true;
   if (!u) return;
@@ -4185,8 +4203,8 @@ async function main() {
     try { fdb = f.initializeFirestore(fa, { localCache: f.persistentLocalCache({ tabManager: f.persistentMultipleTabManager() }) }); }
     catch (e) { fdb = f.getFirestore(fa); }
   } catch (e) { await startGuest(); return; }
-  visTrack();
-  FB.authMod.onAuthStateChanged(auth, (u) => visOwner(u));
+  let tracked = false;
+  FB.authMod.onAuthStateChanged(auth, (u) => { if (!tracked) { tracked = true; visTrack(u); } visOwner(u); });
   let first = true;
   {
     FB.authMod.onAuthStateChanged(auth, (u) => {
