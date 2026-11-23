@@ -870,6 +870,7 @@ main{position:relative}
 .ltdh button{color:inherit;font-weight:500}
 .ltdb{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .ltdb button{font-size:.8rem}
+.ltdl{list-style:none;padding:0;margin:8px 0}.ltdl li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12)}.ltdl span{opacity:.75;font-size:.85rem}
 /* Filament: Stückzahl +/- und NFC */
 .vlogo{left:12px;bottom:12px;height:52px;max-width:40%}
 .vlogo.cut{height:44px}
@@ -3750,6 +3751,27 @@ body .tpanel .tval{color:#c3d0c9}
       var g=sv.querySelector('g[data-m="url(#'+m+')"]');if(g)g.removeAttribute("mask");
     });
   })();
+  /* Limitierte KNIPEX-Editionen: Liste liegt zusätzlich als knipex-editionen.json neben der App und wird
+     monatlich automatisch ergänzt. Neue Einträge werden übernommen und beim nächsten Öffnen kurz angezeigt. */
+  function ltdLoad(){
+    if(!/^https?:$/.test(location.protocol))return;
+    fetch("knipex-editionen.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
+      if(!j||!Array.isArray(j.editionen))return;var add=false;
+      j.editionen.forEach(function(e){if(!e||!e.nr||!e.sx||!e.n)return;if(!KNIPEX_LTD.some(function(x){return x.nr===e.nr&&x.sx===e.sx;})){KNIPEX_LTD.push({nr:e.nr,sx:e.sx,n:e.n,j:+e.j||0,k:e.k||e.n});add=true;}});
+      if(add)render();
+      var key=function(e){return e.nr+" "+e.sx;},all=KNIPEX_LTD.map(key),seen=null;
+      try{seen=JSON.parse(localStorage.getItem("nx-ltd-seen")||"null");}catch(e){}
+      try{localStorage.setItem("nx-ltd-seen",JSON.stringify(all));}catch(e){}
+      if(!Array.isArray(seen))return;
+      var neu=KNIPEX_LTD.filter(function(e){return seen.indexOf(key(e))<0;});if(!neu.length)return;
+      var de=lang==="de",show=function(){
+        toastS((de?"★ Neue limitierte KNIPEX-Edition: ":"★ New limited KNIPEX edition: ")+neu[0].n+(neu.length>1?(de?" (+"+(neu.length-1)+" weitere)":" (+"+(neu.length-1)+" more)"):""),de?"Ansehen":"View",function(){
+          nfcDlg('<h3>★ '+(de?"Neue limitierte Editionen":"New limited editions")+'</h3><ul class="ltdl">'+neu.map(function(e){return '<li><b>'+esc(e.n)+'</b><br><span>'+esc("KNIPEX "+e.nr+" "+e.sx)+(e.j?" · "+e.j:"")+'</span></li>';}).join("")+'</ul><p class="nfch">'+(de?"Du findest sie beim Werkzeug unter „Limitierte Edition“.":"You'll find them under “Limited edition” for tools.")+'</p>');
+        });};
+      var sp=document.getElementById("splash");if(sp&&!sp.hidden&&sp.isConnected)setTimeout(show,4500);else setTimeout(show,800);
+    }).catch(function(){});
+  }
+  ltdLoad();
   applyLang();
   fitTitle();
   /* Schnittstelle für Konto-Modul (account.js) */

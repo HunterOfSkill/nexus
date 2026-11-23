@@ -1,0 +1,77 @@
+{
+ "hinweis": "Limitierte KNIPEX-Editionen für die Nexus-App. Felder: nr = eingeprägte Grundnummer (Format '87 99 180'), sx = Zusatz auf der Verpackung (z. B. S01, XMAS), n = voller Name, k = kurzer Name für die Karte, j = Jahr (0 = unbekannt), quelle = Beleg-Link, hinzugefuegt = Datum.",
+ "editionen": [
+  {
+   "nr": "87 00 100",
+   "sx": "XMAS",
+   "n": "Cobra XS Christbaumkugel",
+   "k": "Christbaumkugel",
+   "j": 2022,
+   "quelle": "https://www.voltimum.co.uk/news/knipex/knipex-launches-its-christmas-promotion-0",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "86 01 180",
+   "sx": "XMAS",
+   "n": "Zangenschlüssel Weihnachts-Edition (schwarz/gold)",
+   "k": "Weihnachts-Edition",
+   "j": 2023,
+   "quelle": "https://www.voltimum.co.uk/news/knipex/knipex-launches-its-christmas-promotion-1",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "87 99 180",
+   "sx": "S01",
+   "n": "Cobra Bi-Color (weiße Verpackung)",
+   "k": "Bi-Color",
+   "j": 2024,
+   "quelle": "https://blog.knipex.com/en/newsroom/x-mas-2024",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "87 99 180",
+   "sx": "S02",
+   "n": "Cobra Bi-Color (schwarze Verpackung)",
+   "k": "Bi-Color",
+   "j": 2024,
+   "quelle": "https://blog.knipex.com/en/newsroom/x-mas-2024",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "82 01 200",
+   "sx": "S02",
+   "n": "TwinGrip Weihnachts-Edition (grau/bronze)",
+   "k": "Weihnachts-Edition",
+   "j": 2025,
+   "quelle": "https://www.tbs-aachen.de/KNIPEX_TwinGrip-Knipex_82_01_200_S02_TwinGrip_Limited_Edition_2025_i5617_147562.htm",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "08 22 185",
+   "sx": "S01",
+   "n": "Spitz-Kombizange Limited Edition 2026 (1 von 3)",
+   "k": "Edition 1 von 3",
+   "j": 2026,
+   "quelle": "https://www.knipex-shop.com/products/knipex-sonderedition-2026-present",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "70 02 160",
+   "sx": "S8",
+   "n": "Seitenschneider „We Forge Winners“",
+   "k": "We Forge Winners",
+   "j": 2026,
+   "quelle": "https://www.voltimum.co.uk/news/knipex/knipex-launches-limited-edition-diagonal-cutter",
+   "hinzugefuegt": "2026-11-23"
+  },
+  {
+   "nr": "86 01 180",
+   "sx": "S01",
+   "n": "Zangenschlüssel „Flash Green“",
+   "k": "Flash Green",
+   "j": 0,
+   "quelle": "https://www.ebay.de/itm/146764061940",
+   "hinzugefuegt": "2026-11-23"
+  }
+ ]
+}
