@@ -15,10 +15,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap">
 <style>
 :root{--bg:#e8ece9;--surface:#f7f9f8;--ink:#1c2824;--muted:#5d6b66;--line:#c5cdc9;--accent:#1f6f5c;--on-accent:#fff;
---c-messer:#8a4b2a;--c-pflanzen:#2f7d3a;--c-filme:#5a4a9c;--c-schuhe:#c8201a;--c-filament:#00ae42;--c-werkzeug:#d62828;--c-rezepte:#b5651d;
+--c-messer:#8a4b2a;--c-pflanzen:#2f7d3a;--c-filme:#5a4a9c;--c-schuhe:#c8201a;--c-filament:#00ae42;--c-werkzeug:#2f7fd6;--c-rezepte:#b5651d;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#121917;--surface:#1b2420;--ink:#e6ede9;--muted:#98a8a1;--line:#2f3d38;--accent:#4fb39a;--on-accent:#0c1512;--c-messer:#d9895e;--c-pflanzen:#6cc17a;--c-filme:#a597e6;--c-schuhe:#ff6b5f;--c-filament:#3ddc76;--c-werkzeug:#ff6b5a;--c-rezepte:#e3a35c}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#121917;--surface:#1b2420;--ink:#e6ede9;--muted:#98a8a1;--line:#2f3d38;--accent:#4fb39a;--on-accent:#0c1512;--c-messer:#d9895e;--c-pflanzen:#6cc17a;--c-filme:#a597e6;--c-schuhe:#ff6b5f;--c-filament:#3ddc76;--c-werkzeug:#ff6b5a;--c-rezepte:#e3a35c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#121917;--surface:#1b2420;--ink:#e6ede9;--muted:#98a8a1;--line:#2f3d38;--accent:#4fb39a;--on-accent:#0c1512;--c-messer:#d9895e;--c-pflanzen:#6cc17a;--c-filme:#a597e6;--c-schuhe:#ff6b5f;--c-filament:#3ddc76;--c-werkzeug:#6fb6ff;--c-rezepte:#e3a35c}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#121917;--surface:#1b2420;--ink:#e6ede9;--muted:#98a8a1;--line:#2f3d38;--accent:#4fb39a;--on-accent:#0c1512;--c-messer:#d9895e;--c-pflanzen:#6cc17a;--c-filme:#a597e6;--c-schuhe:#ff6b5f;--c-filament:#3ddc76;--c-werkzeug:#6fb6ff;--c-rezepte:#e3a35c}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
 main{max-width:1000px;margin:0 auto;padding:20px 16px 48px;overflow-x:clip}
@@ -871,6 +871,9 @@ main{position:relative}
 .ltdb{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .ltdb button{font-size:.8rem}
 .ltdl{list-style:none;padding:0;margin:8px 0}.ltdl li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12)}.ltdl span{opacity:.75;font-size:.85rem}
+/* Werkzeug: ganze Zange auf der Karte zeigen (nicht abschneiden) */
+.card.werkzeug .ph{background:linear-gradient(180deg,#f7f9fb,#e3e9ef)!important}
+.card.werkzeug .ph img{object-fit:contain;padding:6px;box-sizing:border-box}
 /* Filament: Stückzahl +/- und NFC */
 .vlogo{left:12px;bottom:12px;height:52px;max-width:40%}
 .vlogo.cut{height:44px}
