@@ -862,6 +862,7 @@ main{position:relative}
 .nxvis b{font-weight:700}.nxvis span{opacity:.75}.nxvis div:nth-of-type(1){font-size:.82rem}
 .nxvis em{align-self:flex-start;font-style:normal;font-weight:800;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:999px;color:#1a1204;background:linear-gradient(180deg,#ffd98a,#e9a23b);box-shadow:0 1px 4px rgba(0,0,0,.4)}
 .nxvis[hidden]{display:none}
+@media (min-width:640px){.nxvis{top:0}body.hasvis .top{padding-top:96px}}
 /* Filament: Stückzahl +/- und NFC */
 .vlogo{left:12px;bottom:12px;height:52px;max-width:40%}
 .vlogo.cut{height:44px}
@@ -4179,16 +4180,16 @@ async function visShow() {
     const de = L() === "de", n = all.data().count, t = today.data().count, v = tot.exists() ? tot.data().n || 0 : 0, fmt = (x) => x.toLocaleString(de ? "de-DE" : "en-GB");
     el.innerHTML = '<em>★ Admin</em><div><b>👁 ' + fmt(n) + '</b> <span>' + (de ? "Besucher" : "visitors") + '</span></div><div><b>' + fmt(t) + '</b> <span>' + (de ? "heute" : "today") + '</span> · <b>' + fmt(v) + '</b> <span>' + (de ? "Aufrufe" : "views") + "</span></div>";
     el.title = de ? "Nur für dich sichtbar" : "Only visible to you";
-    el.hidden = false;
+    el.hidden = false; document.body.classList.add("hasvis");
     if (!localStorage.getItem("nx-admin")) { localStorage.setItem("nx-admin", "1"); await visForgetMe(user0); visShow(); }
-  } catch (e) { el.hidden = true; }
+  } catch (e) { el.hidden = true; document.body.classList.remove("hasvis"); }
 }
 let visTimer = null;
 let user0 = null;
 function visOwner(u) {
   user0 = u;
   const el = $("nxVis"); if (!el) return;
-  clearInterval(visTimer); el.hidden = true;
+  clearInterval(visTimer); el.hidden = true; document.body.classList.remove("hasvis");
   if (!u) return;
   visShow(); visTimer = setInterval(() => { if (!document.hidden) visShow(); }, 120000);
 }
