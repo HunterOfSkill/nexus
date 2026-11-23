@@ -999,6 +999,13 @@ body .tpanel .tval{color:#c3d0c9}
 .acct-links{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:6px}
 .acct-link{all:unset;cursor:pointer;color:var(--accent);font-size:.88rem;padding:8px;text-decoration:underline}
 .acct-list{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.acct-dz{margin-top:14px;border-top:1px solid rgba(127,127,127,.18);padding-top:8px;font-size:.8rem}
+.acct-dz summary{cursor:pointer;color:var(--muted,#8a8f98);opacity:.7;list-style:none;text-align:center;padding:6px}
+.acct-dz summary::-webkit-details-marker{display:none}
+.acct-dzbtn{all:unset;cursor:pointer;display:block;margin:6px auto;color:#c0504d;opacity:.75;font-size:.8rem;text-decoration:underline;padding:6px}
+.acct-dz #acct-del label{display:block;margin-top:8px}
+.acct-dz #acct-del input{width:100%;box-sizing:border-box}
+.acct-dz button[disabled]{opacity:.35;cursor:not-allowed}
 .acct-list button,.acct-acts button{border-radius:999px;padding:11px 16px}
 .acctd .danger{color:#d9534f}
 .acctd .primary.danger{background:#c0392b;color:#fff;border-color:transparent}
@@ -3820,7 +3827,7 @@ const S = {
     guestBar: "Ohne Konto: Deine Sammlung ist nur auf diesem Gerät gespeichert.", guestBarBtn: "Konto erstellen / anmelden",
     export: "Sicherung speichern", import: "Sicherung laden", signOut: "Abmelden", delAcct: "Konto löschen",
     delWarn: "Alle Einträge, Fotos und dein Konto werden endgültig gelöscht. Das kann nicht rückgängig gemacht werden.",
-    delPw: "Zur Bestätigung dein Passwort", delGo: "Endgültig löschen", cancel: "Abbrechen",
+    delPw: "Zur Bestätigung dein Passwort", more: "Weitere Optionen", delType: "Tippe LÖSCHEN, um zu bestätigen", delWord: "LÖSCHEN", delGo: "Endgültig löschen", cancel: "Abbrechen",
     expDone: "Sicherung gespeichert.", impAsk: "Sicherung wird geladen …", impDone: "Sicherung geladen: {n} Einträge.", impBad: "Diese Datei ist keine Sicherung dieser App.",
     migTitle: "Einträge von diesem Gerät übernehmen?",
     migText: "Auf diesem Gerät liegen {n} Einträge, die du ohne Konto angelegt hast. Soll ich sie in dein Konto kopieren?",
@@ -3848,7 +3855,7 @@ const S = {
     guestBar: "No account: your collection is only saved on this device.", guestBarBtn: "Create account / sign in",
     export: "Save a backup", import: "Load a backup", signOut: "Sign out", delAcct: "Delete account",
     delWarn: "All entries, photos and your account will be deleted permanently. This cannot be undone.",
-    delPw: "Your password to confirm", delGo: "Delete permanently", cancel: "Cancel",
+    delPw: "Your password to confirm", more: "More options", delType: "Type DELETE to confirm", delWord: "DELETE", delGo: "Delete permanently", cancel: "Cancel",
     expDone: "Backup saved.", impAsk: "Loading backup …", impDone: "Backup loaded: {n} entries.", impBad: "This file is not a backup of this app.",
     migTitle: "Take over entries from this device?",
     migText: "There are {n} entries on this device that you created without an account. Copy them into your account?",
@@ -4129,10 +4136,11 @@ function openAcct() {
       ? '<p class="acct-p">' + esc(tt("guestInfo")) + "</p>" + (hasCfg ? '<div class="acts acct-acts"><button type="button" class="primary" data-a="login">' + esc(tt("guestBarBtn")) + "</button></div>" : '<p class="acct-hint"><b>' + esc(tt("cfgTitle")) + "</b><br>" + esc(tt("cfgText")) + "</p>")
       : '<p class="acct-p">' + esc(tt("signedIn")) + " <b>" + esc((user && user.email) || "") + "</b></p><p class=\"acct-hint\">" + esc(tt("saved")) + "</p>") +
     '<div class="acct-list"><button type="button" class="ghost" data-a="export">' + esc(tt("export")) + '</button><button type="button" class="ghost" data-a="import">' + esc(tt("import")) + "</button>" +
-    (guest ? "" : '<button type="button" class="ghost" data-a="out">' + esc(tt("signOut")) + '</button><button type="button" class="ghost danger" data-a="del">' + esc(tt("delAcct")) + "</button>") + "</div>" +
-    '<div id="acct-del" hidden><p class="acct-msg">' + esc(tt("delWarn")) + '</p><label for="ad-pw">' + esc(tt("delPw")) + '</label><input id="ad-pw" type="password" autocomplete="current-password"><p class="acct-msg" id="ad-msg" role="alert"></p><div class="acts acct-acts"><button type="button" class="ghost" data-a="delno">' + esc(tt("cancel")) + '</button><button type="button" class="primary danger" data-a="delgo">' + esc(tt("delGo")) + "</button></div></div>" +
+    (guest ? "" : '<button type="button" class="ghost" data-a="out">' + esc(tt("signOut")) + "</button>") + "</div>" +
     '<p class="acct-msg ok" id="ac-msg" role="status"></p><input type="file" id="ac-file" accept="application/json,.json" hidden>' +
-    '<div class="acts acct-acts"><button type="button" class="ghost" data-a="x">' + esc(tt("close")) + "</button></div>";
+    '<div class="acts acct-acts"><button type="button" class="ghost" data-a="x">' + esc(tt("close")) + "</button></div>" +
+    (guest ? "" : '<details class="acct-dz"><summary>' + esc(tt("more")) + '</summary><button type="button" class="acct-dzbtn" data-a="del">' + esc(tt("delAcct")) + " …</button>" +
+    '<div id="acct-del" hidden><p class="acct-msg">' + esc(tt("delWarn")) + '</p><label for="ad-word">' + esc(tt("delType")) + '</label><input id="ad-word" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"><label for="ad-pw">' + esc(tt("delPw")) + '</label><input id="ad-pw" type="password" autocomplete="current-password"><p class="acct-msg" id="ad-msg" role="alert"></p><div class="acts acct-acts"><button type="button" class="ghost" data-a="delno">' + esc(tt("cancel")) + '</button><button type="button" class="primary danger" data-a="delgo" id="ad-go" disabled>' + esc(tt("delGo")) + "</button></div></div></details>");
   const v = $("vAcct");
   const say = (m, bad) => { const e = $("ac-msg"); e.className = "acct-msg" + (bad ? "" : " ok"); e.textContent = m; };
   v.onclick = async (e) => {
@@ -4144,10 +4152,11 @@ function openAcct() {
     }
     if (a === "import") $("ac-file").click();
     if (a === "out") { await FB.authMod.signOut(auth); try { localStorage.removeItem("ss-guest"); } catch (er) {} location.reload(); }
-    if (a === "del") { $("acct-del").hidden = false; $("ad-pw").focus(); }
-    if (a === "delno") $("acct-del").hidden = true;
+    if (a === "del") { $("acct-del").hidden = false; b.hidden = true; $("ad-word").focus(); }
+    if (a === "delno") { $("acct-del").hidden = true; $("ad-word").value = ""; $("ad-pw").value = ""; $("ad-go").disabled = true; const db = v.querySelector('[data-a="del"]'); if (db) db.hidden = false; const dz = v.querySelector(".acct-dz"); if (dz) dz.open = false; }
     if (a === "delgo") {
       const pw = $("ad-pw").value; const m = $("ad-msg");
+      if ($("ad-word").value.trim().toUpperCase() !== tt("delWord")) return;
       if (!pw) { m.textContent = tt("e_cred"); return; }
       b.disabled = true; m.textContent = tt("working");
       try {
@@ -4160,6 +4169,7 @@ function openAcct() {
       } catch (er) { b.disabled = false; m.textContent = authMsg(er); }
     }
   };
+  if ($("ad-word")) $("ad-word").oninput = () => { $("ad-go").disabled = $("ad-word").value.trim().toUpperCase() !== tt("delWord"); };
   $("ac-file").onchange = async (e) => {
     const f = e.target.files && e.target.files[0]; if (!f) return;
     say(tt("impAsk"));
