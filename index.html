@@ -828,6 +828,27 @@ body[data-cat="filament"] .ttl h1{position:relative;z-index:2;line-height:.9;pad
 .wlink.on .wsw{background:#3fb6ff}.wlink.on .wsw i{transform:translateX(16px)}
 .wflink{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.85rem}
 .wflink input{width:18px;height:18px;accent-color:#4cd07d}
+/* Pflanzen: Feuchtigkeitssensor (Home Assistant) */
+.snl{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin-top:7px;font-size:.78rem;line-height:1.3;color:#e9f5ee}
+.snl .snm{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;background:rgba(76,208,125,.18);border:1px solid rgba(76,208,125,.5)}
+.snl.mid .snm{background:rgba(255,190,60,.16);border-color:rgba(255,190,60,.55);color:#ffe2a6}
+.snl.dry .snm{background:rgba(255,80,60,.18);border-color:rgba(255,90,70,.6);color:#ffb3a6}
+.snl.old .snm{opacity:.55;filter:grayscale(1)}
+.snl small{color:var(--muted)}
+.snp{margin:14px 0 0;padding:14px;border-radius:16px;background:rgba(76,208,125,.08);border:1px solid rgba(76,208,125,.3)}
+.snp.mid{background:rgba(255,190,60,.09);border-color:rgba(255,190,60,.35)}
+.snp.dry{background:rgba(255,80,60,.1);border-color:rgba(255,90,70,.45)}
+.snp.old{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.18)}
+.snbig{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-bottom:10px;font-size:1.05rem}
+.snbig b{font-size:1.5rem}.snbig small{color:var(--muted);font-size:.85rem}
+.snbig .snst{font-weight:600;color:#2e8b4f}.snp.dry .snbig .snst{color:#d93a2b}.snp.mid .snbig .snst{color:#c77700}.snp.old .snbig .snst{color:var(--muted)}
+.snbar{height:10px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin-bottom:10px}
+.snbar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#5ad1ff,#4cd07d);transition:width .4s}
+.snp.mid .snbar i{background:linear-gradient(90deg,#ffd35a,#ff9f2e)}
+.snp.dry .snbar i{background:linear-gradient(90deg,#ff7a59,#ff3b3b)}
+.snp .wdl{margin-bottom:0}.snp .snwarn{color:#c77700}
+.snform select{width:100%}.snform .wform{margin-top:10px}.snform .wform span{white-space:nowrap;font-size:.9rem}
+.snset .acts{flex-wrap:wrap;justify-content:flex-start}
 /* Werkzeug: Blaupause – Werkzeuge werden als technische Zeichnung Strich für Strich gezeichnet und vermessen */
 #wzfx .bp{position:absolute;inset:auto;height:auto;color:rgba(225,242,255,.72);overflow:visible;filter:drop-shadow(0 0 2px rgba(150,210,255,.35))}
 #wzfx .bp path,#wzfx .bp circle{stroke-dasharray:1 1;stroke-dashoffset:1;animation:bpDraw 18s ease-in-out infinite;animation-delay:var(--d)}
@@ -1613,7 +1634,7 @@ body .tpanel .tval{color:#c3d0c9}
       return '<div class="cw'+(pl?' hasp':'')+(qy?' hasq':'')+(wb?' hasw':'')+'">'+pl+qy+wb+'<button type="button" class="card '+it.cat+'" data-open="'+esc(it.id)+'"><div class="ph">'+
         (img?'<img src="'+esc(thumbUrl(img))+'" alt="'+esc(it.name)+'" loading="lazy">':(it.cat==="filament"?spoolSvg(it.data.farbhex):'<span class="ini">'+CATS[it.cat].ini+'</span>'))+
         (it.images.length>1?'<span class="badge">'+it.images.length+'</span>':'')+(it.cat==="filament"&&it.data.logo?'<span class="blogo'+(it.data.logocut?' cut':'')+'"><img src="'+esc(thumbUrl(it.data.logo))+'" alt="'+esc(it.data.marke||"")+'"></span>':'')+'</div>'+
-        '<div class="info"><div class="name">'+esc(it.name)+'</div><div class="tag">'+esc(CATS[it.cat].n[L()])+'</div>'+(function(){var fl=it.cat==="filme"&&it.data.format==="digital"&&it.data.logo?'<span class="flogo'+(it.data.logocut?' cut':'')+'"><img src="'+esc(thumbUrl(it.data.logo))+'" alt="'+esc(it.data.anbieter||"")+'"></span>':'',ch=chips(it);if(fl)return ch?ch.replace(/<\/div>$/,fl+'</div>'):'<div class="chips">'+fl+'</div>';return ch||'<div class="sum">'+summary(it)+'</div>';})()+(wi?wHtml(it,wi):'')+'</div></button></div>';
+        '<div class="info"><div class="name">'+esc(it.name)+'</div><div class="tag">'+esc(CATS[it.cat].n[L()])+'</div>'+(function(){var fl=it.cat==="filme"&&it.data.format==="digital"&&it.data.logo?'<span class="flogo'+(it.data.logocut?' cut':'')+'"><img src="'+esc(thumbUrl(it.data.logo))+'" alt="'+esc(it.data.anbieter||"")+'"></span>':'',ch=chips(it);if(fl)return ch?ch.replace(/<\/div>$/,fl+'</div>'):'<div class="chips">'+fl+'</div>';return ch||'<div class="sum">'+summary(it)+'</div>';})()+(wi?wHtml(it,wi):'')+(it.cat==="pflanzen"?snHtml(it):'')+'</div></button></div>';
     }
     var cls="gi g-"+st.lay;
     if(st.group&&!term){
@@ -1742,6 +1763,7 @@ body .tpanel .tval{color:#c3d0c9}
       else h+='<input id="f-'+f[0]+'" type="'+(f[4]||"text")+'"'+(f[5]?' step="'+f[5]+'" inputmode="decimal"':"")+' value="'+esc(dv[f[0]]||"")+'">';
       h+='</div>';
     });
+    if(c==="pflanzen"&&snOn())h+=snFormHtml(dv);
     h+='<div class="full"><label for="f-note">'+esc(t("noteLbl"))+'</label><textarea id="f-note" rows="3">'+esc(it?it.note||"":"")+'</textarea></div></div>'+
       '<div class="acts"><button type="button" class="ghost" id="bCancel">'+esc(t("cancel"))+'</button><button type="submit" class="primary">'+esc(t("save"))+'</button></div>';
     fAdd.innerHTML=h;
@@ -1749,6 +1771,11 @@ body .tpanel .tval{color:#c3d0c9}
       if(wgR){wgR.addEventListener("input",function(){wgR.setAttribute("data-set","1");wgL.textContent=wIvTxt(+wgR.value);});
         if(wgW)wgW.addEventListener("change",function(){if(!wgR.getAttribute("data-set")){wgR.value=wDef(wgW.value);wgL.textContent=wIvTxt(+wgR.value);}});}
       if(wgN&&wgD)wgN.addEventListener("click",function(){wgD.value=wNowStr();});
+      var snS=document.getElementById("f-sensor"),snR=document.getElementById("f-snmin"),snRL=document.getElementById("f-snmin-l"),snRW=document.getElementById("f-snmin-w");
+      if(snS&&snR){var snU=function(){snRW.hidden=!snS.value;snRL.textContent=snR.value+" %";};
+        snS.addEventListener("change",snU);snR.addEventListener("input",function(){snR.setAttribute("data-set","1");snU();});
+        if(wgW)wgW.addEventListener("change",function(){if(!snR.getAttribute("data-set")){snR.value=snMinDef(wgW.value);snU();}});
+        snU();}
       var wlW=document.getElementById("f-wlink-w"),wlC=document.getElementById("f-wlink"),wlT=document.getElementById("f-wlink-t"),wgG=document.getElementById("f-gattung"),wgF=document.getElementById("f-familie");
       var wlU=function(){var g=wGrp({gattung:wgG?wgG.value:"",familie:wgF?wgF.value:""});var self={id:editId||"__neu",data:{}};
         var m=g?items.filter(function(x){return x.cat==="pflanzen"&&x.id!==self.id&&(wGrp(x.data)||{}).k===g.k;}):[];
@@ -2125,7 +2152,12 @@ body .tpanel .tval{color:#c3d0c9}
     var note=document.getElementById("f-note").value.trim();
     var ex=editId?find(editId):null;
     var wlBox=document.getElementById("f-wlink"),wlWrap=document.getElementById("f-wlink-w");
-    if(addCat==="pflanzen"){if(wlBox&&wlWrap&&!wlWrap.hidden&&!wlBox.checked)data.giessenEigen="1";else if(wlBox&&wlWrap&&wlWrap.hidden&&ex&&ex.data.giessenEigen)data.giessenEigen="1";if(ex&&ex.data.gegossenPrev!=null&&data.gegossen===ex.data.gegossen)data.gegossenPrev=ex.data.gegossenPrev;}
+    if(addCat==="pflanzen"){if(wlBox&&wlWrap&&!wlWrap.hidden&&!wlBox.checked)data.giessenEigen="1";else if(wlBox&&wlWrap&&wlWrap.hidden&&ex&&ex.data.giessenEigen)data.giessenEigen="1";if(ex&&ex.data.gegossenPrev!=null&&data.gegossen===ex.data.gegossen)data.gegossenPrev=ex.data.gegossenPrev;
+      /* Feuchtigkeitssensor: Verknüpfung + eigene Gieß-Grenze; ältere „gegossen“-Meldungen eines neu gewählten Sensors zählen nicht */
+      var snS=document.getElementById("f-sensor"),snR=document.getElementById("f-snmin");
+      if(snS){if(snS.value){data.sensor=snS.value;if(snR&&snR.getAttribute("data-set"))data.sensorMin=String(snR.value);}}
+      else if(ex){if(ex.data.sensor)data.sensor=ex.data.sensor;if(ex.data.sensorMin)data.sensorMin=ex.data.sensorMin;}
+      if(data.sensor){if(ex&&ex.data.sensor===data.sensor&&ex.data.gegossenSensor)data.gegossenSensor=ex.data.gegossenSensor;else data.gegossenSensor=String(+((SNF&&SNF.w||{})[data.sensor])||0);}}
     var ref=ex?itemsCol.doc(ex.id):itemsCol.doc();
     var btn=fAdd.querySelector("button[type=submit]");
     saving=true;btn.disabled=true;btn.textContent=t("saving");
@@ -2198,7 +2230,7 @@ body .tpanel .tval{color:#c3d0c9}
       (it.images.length>1?'<div class="thumbs">'+it.images.map(function(s,i){return '<img src="'+esc(thumbUrl(s))+'" alt="" data-th="'+i+'" class="'+(i===curIdx?"on":"")+'">';}).join("")+'</div>':'')+
       '<div class="dpad"><button type="button" class="shareb" data-share="1"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>'+esc(t("share"))+'</button><div class="tagd">'+esc(CATS[it.cat].n[L()])+'</div><h2>'+esc(it.name)+'</h2>'+(rows?'<dl class="det">'+rows+'</dl>':'')+recipeHtml(it)+
       (it.note?'<p class="nt">'+esc(it.note)+'</p>':'')+
-      (it.cat==="pflanzen"?wPanel(it):'')+
+      (it.cat==="pflanzen"?snPanel(it)+wPanel(it):'')+
       (it.cat==="filament"?'<div class="vqty"><span>'+(lang==="de"?"Stückzahl":"Quantity")+'</span><div class="qty big"><button type="button" data-qty="-1" data-qid="'+esc(it.id)+'" aria-label="−">−</button><b>'+(parseInt(d.stueck,10)||0)+'</b><button type="button" data-qty="1" data-qid="'+esc(it.id)+'" aria-label="+">+</button></div></div>'+
         '<div class="nfcrow" style="margin-bottom:64px"><button type="button" class="ghost" data-nfcw="1">📶 '+(lang==="de"?"NFC-Tag beschreiben":"Write NFC tag")+'</button></div>':'')+
       '<div class="acts"><button type="button" class="ghost" data-edit="1">'+esc(t("edit"))+'</button><button type="button" class="primary" data-close="1">'+esc(t("close"))+'</button></div></div>';
@@ -3023,7 +3055,7 @@ body .tpanel .tval{color:#c3d0c9}
       '<div class="msec">'+esc(lang==="de"?"Pflanzen am Foto erkennen (optional)":"Identify plants from photos (optional)")+'</div>'+
       '<input id="pnKey" type="text" autocomplete="off" spellcheck="false" placeholder="Pl@ntNet API-Key" value="'+esc(pnKeyGet())+'">'+
       '<div class="autohint">'+esc(lang==="de"?"Kostenlosen Schlüssel auf my.plantnet.org holen (Konto → API). Dann erkennt die App beim Hinzufügen eines Fotos die Pflanze und vergleicht sie mit dem Namen.":"Get a free key at my.plantnet.org (account → API). The app then identifies the plant from a photo and compares it with the name.")+'</div>'+
-      (Object.keys(HIDDEN).length?'<div class="msec">'+esc(lang==="de"?"Gelöschte Kategorien wiederherstellen":"Restore deleted categories")+'</div><div class="rstr">'+Object.keys(HIDDEN).map(function(k){return '<button type="button" class="ghost" data-restore="'+k+'">↺ '+esc(CATS[k].n[L()])+'</button>';}).join("")+'</div>':'')+'</div>';
+      (Object.keys(HIDDEN).length?'<div class="msec">'+esc(lang==="de"?"Gelöschte Kategorien wiederherstellen":"Restore deleted categories")+'</div><div class="rstr">'+Object.keys(HIDDEN).map(function(k){return '<button type="button" class="ghost" data-restore="'+k+'">↺ '+esc(CATS[k].n[L()])+'</button>';}).join("")+'</div>':'')+snSetHtml()+'</div>';
   }
   function pnKeyGet(){try{return localStorage.getItem("nx_pn_key")||"";}catch(e){return "";}}
   if(bSet&&dSet){
@@ -3031,6 +3063,7 @@ body .tpanel .tval{color:#c3d0c9}
     dSet.addEventListener("input",function(e){if(e.target&&e.target.id==="pnKey"){try{localStorage.setItem("nx_pn_key",e.target.value.trim());}catch(x){}}});
     dSet.addEventListener("click",function(e){
       if(e.target===dSet||e.target.closest("[data-x]")){dSet.close();return;}
+      if(snSetClick(e))return;
       var rs=e.target.closest("[data-restore]");if(rs&&catsCol){var rk=rs.getAttribute("data-restore");catsCol.doc(HIDDEN[rk]||("hide_"+rk)).delete().then(function(){delete HIDDEN[rk];buildCatSelect();render();fillSet();});return;}
       var o=e.target.closest("[data-sp]");if(o){setSpStyle(o.getAttribute("data-sp"));fillSet();return;}
       if(e.target.closest("[data-prev]")){dSet.close();spShow();}
@@ -3058,6 +3091,7 @@ body .tpanel .tval{color:#c3d0c9}
         if(statusKey==="slow"||statusKey==="loading")setStatus("");
         if(!migrated){migrated=true;if(!LOCAL_MODE)migrate();}
       }
+      if(SNF&&loaded)setTimeout(snApply,0);
       /* Nichts Sichtbares geändert (nur Gieß-Zeit oder nur Speicher-Bestätigung)? Dann nicht alles neu aufbauen – sonst blinkt die Seite */
       var sig=itemsSig(items);
       if(sig===itemsSig.last&&!pendingOpen){if(dView.open&&cur){var f0=find(cur.id);if(f0)cur=f0;}wTick();return;}
@@ -3067,6 +3101,8 @@ body .tpanel .tval{color:#c3d0c9}
       if(pendingOpen)tryOpenPending();
       if(dView.open&&cur){var f=find(cur.id);if(f){cur=f;if(curIdx>=f.images.length)curIdx=0;if(wDragging){f.data.giessen=String(wDragging.value);}else drawView();}else if(!pendingOpen)dView.close();}
     },function(){clearTimeout(timer);setStatus("err");});
+    /* Feuchtigkeitssensoren (nur mit Konto) */
+    if(NX_UID){try{dbH.collection("sensorfeed").onSnapshot(function(snap){snFeed(snap.docs.map(function(d){var o=Object.assign({},d.data()||{});o.id=d.id;return o;}));},function(){});}catch(e){}}
   }
   /* ---------- Lokaler Speicher (Besucher ohne Schreibrecht / ohne Anmeldung) ---------- */
   function makeLocal(){
@@ -3470,7 +3506,7 @@ body .tpanel .tval{color:#c3d0c9}
   function tessEnhance(src){try{var c=document.createElement("canvas");c.width=src.width;c.height=src.height;var x=c.getContext("2d");x.drawImage(src,0,0);var im=x.getImageData(0,0,c.width,c.height),d=im.data,n=d.length/4,i,g,sum=0;for(i=0;i<d.length;i+=4){g=d[i]*.299+d[i+1]*.587+d[i+2]*.114;d[i]=g;sum+=g;}var inv=sum/n<110;for(i=0;i<d.length;i+=4){g=Math.max(0,Math.min(255,(d[i]-128)*1.8+128));if(inv)g=255-g;d[i]=d[i+1]=d[i+2]=g;d[i+3]=255;}x.putImageData(im,0,0);return c;}catch(e){return null;}}
   /* ---------- Filament: Stückzahl direkt ändern ---------- */
   /* ---------- Pflanzen: Gießintervall und Gieß-Erinnerung ---------- */
-  var WFX={giessen:1,gegossen:1,gegossenPrev:1,giessenEigen:1},DAY=864e5;
+  var WFX={giessen:1,gegossen:1,gegossenPrev:1,giessenEigen:1,gegossenSensor:1},DAY=864e5;
   /* Gleiche Gattung (sonst gleiche Familie) = gleiches Gießintervall, außer bei Pflanzen mit eigenem Intervall */
   function wGrp(d){
     d=d||{};var g=String(d.gattung||"").replace(/\s*\(.*\)\s*$/,"").trim();
@@ -3632,6 +3668,7 @@ body .tpanel .tval{color:#c3d0c9}
     var pn=document.querySelector("[data-wpanel]");
     if(pn&&dView.open&&cur&&cur.id===pn.getAttribute("data-wpanel"))wPanelUpd(pn,cur);
     wAllUi();
+    snUi();
   }
   setInterval(wTick,60000);
   document.addEventListener("visibilitychange",function(){if(!document.hidden)wTick();});
@@ -3644,6 +3681,137 @@ body .tpanel .tval{color:#c3d0c9}
   document.addEventListener("pointerdown",function(e){var r=e.target.closest&&e.target.closest("[data-wint]");if(!r)return;e.preventDefault();wDragging=r;try{r.setPointerCapture(e.pointerId);}catch(er){}wFromX(r,e.clientX);},true);
   document.addEventListener("pointermove",function(e){if(wDragging){e.preventDefault();wFromX(wDragging,e.clientX);}},true);
   ["pointerup","pointercancel"].forEach(function(ev){document.addEventListener(ev,function(){if(wDragging){var r=wDragging;wDragging=null;wInt(r,true);}},true);});
+  /* ---------- Pflanzen: Feuchtigkeitssensoren (Home Assistant → Firebase → Nexus) ----------
+     Home Assistant schreibt die Messwerte alle 10 Minuten in ein eigenes Dokument (users/<uid>/sensorfeed/<geheime ID>).
+     Steigt die Bodenfeuchte eines Sensors sprunghaft, meldet Home Assistant zusätzlich „gegossen“ –
+     Nexus trägt das dann bei der verknüpften Pflanze als „Zuletzt gegossen“ ein (rückgängig machbar wie sonst auch). */
+  var NX_UID=null,SNF=null,snDone={},SN_OLD=12*36e5;
+  function snOn(){return !!(NX_UID&&SNF);}
+  function snKeys(){if(!SNF)return [];var s=SNF.s||{};return Object.keys(s).sort(function(a,b){return String((s[a]||{}).n||a).localeCompare(String((s[b]||{}).n||b),"de",{numeric:true});});}
+  function snOf(it){if(!SNF||!it||it.cat!=="pflanzen"||!it.data.sensor)return null;var s=(SNF.s||{})[it.data.sensor];return s&&s.m!=null&&!isNaN(+s.m)?s:null;}
+  function snMinDef(w){return w==="viel"?35:w==="wenig"?20:25;}
+  function snMin(it){var v=parseInt(it.data.sensorMin,10);return v>=0&&v<=100?v:snMinDef(it.data.wasser);}
+  function snLvl(it,m){var mn=snMin(it);return m<mn?"dry":m<mn+15?"mid":"ok";}
+  function snAge(s){var at=+s.at||0;return at?Math.max(0,Date.now()-at):Infinity;}
+  function snStTxt(lv){var de=lang==="de";return lv==="dry"?(de?"Gießen!":"Water now!"):lv==="mid"?(de?"Bald gießen":"Water soon"):(de?"Feucht genug":"Moist enough");}
+  function snHtml(it){
+    var s=snOf(it);if(!s)return "";
+    var m=Math.round(+s.m),old=snAge(s)>SN_OLD,de=lang==="de";
+    return '<div class="snl '+snLvl(it,m)+(old?' old':'')+'" data-sn="'+esc(it.id)+'"><span class="snm">🌱 <b>'+m+' %</b></span>'+(old?'<small>'+(de?"keine neuen Werte":"no new data")+'</small>':'')+'</div>';
+  }
+  function snPanel(it){
+    if(!snOn()||it.cat!=="pflanzen"||!it.data.sensor)return "";
+    var de=lang==="de",s=snOf(it);
+    if(!s)return '<div class="snp old" data-snp="'+esc(it.id)+'"><div class="snbig"><span>🌱</span><span>'+(de?"Der Sensor meldet sich gerade nicht":"The sensor isn't reporting right now")+'</span></div><div class="autohint">'+(de?"Prüfe in Home Assistant, ob er noch verbunden ist (Batterie, Reichweite).":"Check in Home Assistant whether it's still connected (battery, range).")+'</div></div>';
+    var m=Math.round(+s.m),lv=snLvl(it,m),age=snAge(s),old=age>SN_OLD,w=+((SNF.w||{})[it.data.sensor])||0;
+    return '<div class="snp '+lv+(old?' old':'')+'" data-snp="'+esc(it.id)+'">'+
+      '<div class="snbig"><span>🌱</span><b>'+m+' %</b><span class="snst">'+esc(snStTxt(lv))+'</span><small>'+(de?"Bodenfeuchte":"Soil moisture")+(s.n?' · '+esc(s.n):'')+'</small></div>'+
+      '<div class="snbar"><i style="width:'+Math.max(0,Math.min(100,m))+'%"></i></div>'+
+      '<dl class="wdl">'+
+      '<dt>'+(de?"Gießen ab":"Water below")+'</dt><dd>'+snMin(it)+' %</dd>'+
+      (s.b!=null&&!isNaN(+s.b)?'<dt>'+(de?"Akku":"Battery")+'</dt><dd>🔋 '+Math.round(+s.b)+' %</dd>':'')+
+      (s.t!=null&&!isNaN(+s.t)?'<dt>'+(de?"Temperatur":"Temperature")+'</dt><dd>🌡 '+esc((+s.t).toLocaleString(de?"de-DE":"en-GB",{maximumFractionDigits:1}))+' °C</dd>':'')+
+      '<dt>'+(de?"Messwert":"Reading")+'</dt><dd'+(old?' class="snwarn"':'')+'>'+(isFinite(age)?esc((de?"vor ":"")+wDur(age)+(de?"":" ago")):"–")+(old?(de?" – keine neuen Werte":" – no new data"):"")+'</dd>'+
+      (w?'<dt>'+(de?"Gießen erkannt":"Watering detected")+'</dt><dd>'+esc(wDate(w))+'</dd>':'')+
+      '</dl></div>';
+  }
+  /* Werte auffrischen, ohne die Liste neu aufzubauen */
+  function snUi(){
+    [].forEach.call(document.querySelectorAll("[data-sn]"),function(el){
+      var it=find(el.getAttribute("data-sn")),h=it?snHtml(it):"";
+      if(!h){if(el.parentNode)el.parentNode.removeChild(el);return;}
+      var tmp=document.createElement("div");tmp.innerHTML=h;el.parentNode.replaceChild(tmp.firstChild,el);
+    });
+    var pn=document.querySelector("[data-snp]");
+    if(pn&&dView.open&&cur&&cur.id===pn.getAttribute("data-snp")){var tmp2=document.createElement("div");tmp2.innerHTML=snPanel(cur);if(tmp2.firstChild)pn.parentNode.replaceChild(tmp2.firstChild,pn);else pn.parentNode.removeChild(pn);}
+    var st=document.getElementById("snStat");if(st)st.innerHTML=snStatTxt();
+  }
+  /* Neue Daten aus Firebase */
+  function snFeed(list){
+    var best=null;(list||[]).forEach(function(o){if(o&&o.id&&(!best||(+o.created||0)>(+best.created||0)))best=o;});
+    var had=!!SNF,before=snKeys().join(",");
+    SNF=best?{id:best.id,s:best.s||{},w:best.w||{},ts:+best.ts||0,created:+best.created||0}:null;
+    if(had!==!!SNF||before!==snKeys().join(",")){render();if(dView.open&&cur&&cur.cat==="pflanzen")drawView();}
+    else snUi();
+    if(dSet&&dSet.open&&had!==!!SNF)fillSet();
+    snApply();
+  }
+  function wStr(t){var d=new Date(t),z=function(n){return (n<10?"0":"")+n;};return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+"T"+z(d.getHours())+":"+z(d.getMinutes());}
+  /* Gießen erkannt → bei der verknüpften Pflanze „Zuletzt gegossen“ setzen (jedes Ereignis nur einmal) */
+  function snApply(){
+    if(!SNF||!itemsCol||!loaded)return;
+    var hit=[],now=Date.now();
+    items.forEach(function(it){
+      if(it.cat!=="pflanzen"||!it.data.sensor)return;
+      var w=+((SNF.w||{})[it.data.sensor])||0;
+      if(!w||w<=(+it.data.gegossenSensor||0)||w<=(snDone[it.id]||0))return;
+      snDone[it.id]=w;
+      it.data.gegossenSensor=String(w);
+      /* Schon von Hand als gegossen markiert (bis 2 Std. vorher)? Dann ist es dasselbe Gießen – nichts ändern */
+      if(w>wParse(it.data.gegossen)+72e5&&w<=now+6e5){
+        it.data.gegossenPrev=it.data.gegossen||"";it.data.gegossen=wStr(w);
+        if(!parseInt(it.data.giessen,10))it.data.giessen=String(wStartIv(it));
+        hit.push(it);
+      }
+      wSave(it);
+    });
+    if(!hit.length)return;
+    wTick();
+    var de=lang==="de",ids=hit.map(function(x){return x.id;}),nm=hit.map(function(x){return x.name;}).slice(0,3).join(", ")+(hit.length>3?" …":"");
+    toastS((de?"💧 Gießen erkannt: ":"💧 Watering detected: ")+nm,de?"Rückgängig":"Undo",function(){ids.forEach(function(id){wUndo(id);});});
+  }
+  /* Auswahl im Pflanzen-Formular */
+  function snFormHtml(dv){
+    var de=lang==="de",ks=snKeys(),sv=dv.sensor||"",used={},o='<option value="">'+(de?"– kein Sensor":"– no sensor")+'</option>';
+    items.forEach(function(x){if(x.cat==="pflanzen"&&x.data.sensor&&x.id!==editId)used[x.data.sensor]=x.name;});
+    ks.forEach(function(k){var s=SNF.s[k]||{};o+='<option value="'+esc(k)+'"'+(k===sv?' selected':'')+'>'+esc((s.n||k)+(s.m!=null&&!isNaN(+s.m)?" · "+Math.round(+s.m)+" %":"")+(used[k]?" · "+(de?"bei ":"on ")+used[k]:""))+'</option>';});
+    if(sv&&ks.indexOf(sv)===-1)o+='<option value="'+esc(sv)+'" selected>'+esc(de?"Bisheriger Sensor (meldet sich nicht)":"Previous sensor (not reporting)")+'</option>';
+    var mn=parseInt(dv.sensorMin,10),has=mn>=0&&mn<=100;
+    return '<div class="full snform"><label for="f-sensor">🌱 '+(de?"Feuchtigkeitssensor":"Moisture sensor")+'</label><select id="f-sensor">'+o+'</select>'+
+      '<div class="wform" id="f-snmin-w"'+(sv?'':' hidden')+'><span>'+(de?"Gießen ab":"Water below")+'</span><input id="f-snmin" type="range" min="5" max="80" step="1" value="'+(has?mn:snMinDef(dv.wasser))+'"'+(has?' data-set="1"':'')+'><b id="f-snmin-l"></b></div>'+
+      '<small class="fhint">'+(de?"Unter diesem Wert wird die Anzeige rot. Gießt du, erkennt Nexus das am Sensor und trägt es automatisch als gegossen ein.":"Below this value the display turns red. When you water, Nexus detects it from the sensor and records it automatically.")+'</small></div>';
+  }
+  /* Einstellungen: Verbindung zu Home Assistant */
+  function snBase(){var p=(window.SAMMLUNG_FIREBASE||{}).projectId||"";return "https://firestore.googleapis.com/v1/projects/"+p+"/databases/(default)/documents/users/"+NX_UID+"/sensorfeed/"+(SNF?SNF.id:"");}
+  function snTpl(id){var el=document.getElementById(id);return el?el.textContent.replace(/^\s*\n/,"").replace(/\s+$/,"")+"\n":"";}
+  function snYaml(){return snTpl("snYamlTpl").split("__NEXUS_URL__").join(snBase());}
+  function snRule(){return snTpl("snRuleTpl");}
+  function snMsg(txt){var m=document.getElementById("snMsg");if(m)m.textContent=txt||"";}
+  function snFlash(btn,txt){if(!btn)return;if(!btn._t0)btn._t0=btn.textContent;btn.textContent=txt;clearTimeout(btn._tf);btn._tf=setTimeout(function(){btn.textContent=btn._t0;},2600);}
+  function snCreate(){
+    if(!dbH||!NX_UID)return;var de=lang==="de",a=new Uint8Array(18);
+    try{crypto.getRandomValues(a);}catch(e){for(var i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);}
+    var id="f"+Array.prototype.map.call(a,function(b){return (b<16?"0":"")+b.toString(16);}).join("");
+    snMsg(de?"Einen Moment …":"One moment …");
+    dbH.collection("sensorfeed").doc(id).set({created:Date.now(),ts:0,s:{},w:{}}).then(function(){snMsg("");},function(){snMsg(de?"⚠️ Ging nicht – ist die Firebase-Regel schon eingetragen und veröffentlicht?":"⚠️ Failed – is the Firebase rule added and published?");});
+  }
+  function snRemove(){
+    if(!dbH||!SNF)return;var de=lang==="de";
+    dbH.collection("sensorfeed").doc(SNF.id).delete().catch(function(){snMsg(de?"⚠️ Trennen hat nicht geklappt.":"⚠️ Disconnect failed.");});
+  }
+  function snStatTxt(){
+    if(!SNF)return "";var de=lang==="de",n=snKeys().length;
+    if(!SNF.ts)return de?"✅ Verbindung erstellt – noch keine Daten. Kopiere den Code für Home Assistant, füge ihn unten in die <b>configuration.yaml</b> ein und starte Home Assistant neu.":"✅ Connection created – no data yet. Copy the Home Assistant code, paste it at the end of <b>configuration.yaml</b> and restart Home Assistant.";
+    var age=Math.max(0,Date.now()-SNF.ts),old=age>36e5;
+    return (old?"⚠️ ":"✅ ")+(de?"Verbunden · ":"Connected · ")+n+" "+(de?(n===1?"Sensor":"Sensoren"):(n===1?"sensor":"sensors"))+" · "+(de?"letzte Daten vor ":"last data ")+esc(wDur(age))+(de?"":" ago")+(old?(de?" – läuft Home Assistant?":" – is Home Assistant running?"):"");
+  }
+  function snSetHtml(){
+    if(!NX_UID||(!SNF&&!items.some(function(x){return x.cat==="pflanzen";})))return "";
+    var de=lang==="de",h='<div class="msec">🌱 '+(de?"Pflanzensensoren (Home Assistant)":"Plant sensors (Home Assistant)")+'</div><div class="snset">';
+    if(!SNF)h+='<div class="autohint">'+(de?"Verbinde Nexus mit Home Assistant: Dann siehst du bei jeder Pflanze die Bodenfeuchte, und wenn du gießt, trägt Nexus das automatisch ein.<br><b>1.</b> Regel kopieren und in der Firebase-Konsole unter <b>Firestore Database → Regeln</b> einfügen, dann „Veröffentlichen“.<br><b>2.</b> Verbindung erstellen.":"Connect Nexus to Home Assistant: you'll see the soil moisture of each plant, and watering is recorded automatically.<br><b>1.</b> Copy the rule and paste it in the Firebase console under <b>Firestore Database → Rules</b>, then “Publish”.<br><b>2.</b> Create the connection.")+'</div>'+
+      '<div class="acts"><button type="button" class="ghost" data-snrule>📋 '+(de?"1. Regel kopieren":"1. Copy rule")+'</button><button type="button" class="primary" data-snnew>'+(de?"2. Verbindung erstellen":"2. Create connection")+'</button></div>';
+    else h+='<div class="autohint" id="snStat">'+snStatTxt()+'</div>'+
+      '<div class="acts"><button type="button" class="primary" data-sncopy>📋 '+(de?"Code für Home Assistant":"Home Assistant code")+'</button><button type="button" class="ghost" data-snrule>📋 '+(de?"Firebase-Regel":"Firebase rule")+'</button><button type="button" class="ghost" data-sndel>'+(de?"Trennen":"Disconnect")+'</button></div>';
+    return h+'<div class="autohint" id="snMsg"></div></div>';
+  }
+  function snSetClick(e){
+    var de=lang==="de",b;
+    if((b=e.target.closest("[data-snnew]"))){snCreate();return true;}
+    if((b=e.target.closest("[data-sncopy]"))){copyText(snYaml());snFlash(b,de?"✓ Kopiert – jetzt in Home Assistant einfügen":"✓ Copied – now paste into Home Assistant");return true;}
+    if((b=e.target.closest("[data-snrule]"))){copyText(snRule());snFlash(b,de?"✓ Kopiert – jetzt in Firebase einfügen":"✓ Copied – now paste into Firebase");return true;}
+    if((b=e.target.closest("[data-sndel]"))){if(b.getAttribute("data-sure")){snRemove();return true;}b.setAttribute("data-sure","1");b.textContent=de?"Wirklich trennen?":"Really disconnect?";return true;}
+    return false;
+  }
   function chQty(id,dl){
     var it=find(id);if(!it||!itemsCol)return;
     var n=Math.max(0,(parseInt(it.data.stueck,10)||0)+dl);it.data.stueck=String(n);
@@ -3875,9 +4043,104 @@ body .tpanel .tval{color:#c3d0c9}
     setNeed:function(f){needFull=f;},
     blobUrl:function(id){return blobMap[id]||"";},
     refresh:function(){render();if(dView.open&&cur){try{drawView();}catch(e){}}},
-    makeLocal:makeLocal
+    makeLocal:makeLocal,
+    setUid:function(u){NX_UID=u||null;},
+    sensorFeed:function(list){snFeed(list);}
   };
 })();
+</script>
+<!-- Vorlagen für die Pflanzensensoren: Home-Assistant-Code und Firebase-Regel (werden in den Einstellungen kopiert) -->
+<script type="text/plain" id="snYamlTpl">
+# ===== Nexus: Pflanzensensoren -> Nexus-App =====
+# Diesen ganzen Block unten an die configuration.yaml anhaengen, speichern
+# und Home Assistant neu starten. Neue Bodenfeuchte-Sensoren kommen automatisch dazu.
+# Nicht oeffentlich teilen - der Block enthaelt deine persoenliche Verbindungsadresse.
+rest_command:
+  nexus_werte:
+    url: "__NEXUS_URL__?updateMask.fieldPaths=s&updateMask.fieldPaths=ts&currentDocument.exists=true"
+    method: patch
+    content_type: "application/json"
+    payload: >-
+      {%- set ns = namespace(p=[]) -%}
+      {%- for s in states.sensor if s.attributes.device_class is defined and s.attributes.device_class == 'moisture' and is_number(s.state) -%}
+      {%- set dev = device_id(s.entity_id) -%}
+      {%- if dev -%}
+      {%- set ids = device_entities(dev) -%}
+      {%- set x = namespace(b='', t='', at=0) -%}
+      {%- for e in states.sensor if e.entity_id in ids and is_number(e.state) -%}
+      {%- set r = as_timestamp(e.last_reported if e.last_reported is defined else e.last_updated, 0) -%}
+      {%- if r > x.at -%}{%- set x.at = r -%}{%- endif -%}
+      {%- if e.attributes.device_class is defined and e.attributes.device_class == 'battery' -%}{%- set x.b = ',"b":{"integerValue":"' ~ (e.state | float | round(0) | int) ~ '"}' -%}{%- endif -%}
+      {%- if e.attributes.device_class is defined and e.attributes.device_class == 'temperature' -%}{%- set x.t = ',"t":{"doubleValue":' ~ (e.state | float | round(1)) ~ '}' -%}{%- endif -%}
+      {%- endfor -%}
+      {%- set nm = device_attr(dev, 'name_by_user') or device_attr(dev, 'name') or s.name -%}
+      {%- set ns.p = ns.p + ['"z' ~ dev ~ '":{"mapValue":{"fields":{"n":{"stringValue":' ~ (nm | to_json) ~ '},"m":{"integerValue":"' ~ (s.state | float | round(0) | int) ~ '"}' ~ x.b ~ x.t ~ ',"at":{"integerValue":"' ~ ((x.at * 1000) | int) ~ '"}}}}'] -%}
+      {%- endif -%}
+      {%- endfor -%}
+      {"fields":{"ts":{"integerValue":"{{ (as_timestamp(now()) * 1000) | int }}"},"s":{"mapValue":{"fields":{ {{- ns.p | join(',') -}} }}}}}
+  nexus_gegossen:
+    url: "__NEXUS_URL__?updateMask.fieldPaths=w.z{{ dev }}&updateMask.fieldPaths=ts&currentDocument.exists=true"
+    method: patch
+    content_type: "application/json"
+    payload: >-
+      {"fields":{"ts":{"integerValue":"{{ (as_timestamp(now()) * 1000) | int }}"},"w":{"mapValue":{"fields":{"z{{ dev }}":{"integerValue":"{{ (as_timestamp(now()) * 1000) | int }}"}}}}}}
+
+automation nexus:
+  - id: nexus_werte_senden
+    alias: "Nexus: Pflanzenwerte senden"
+    mode: single
+    max_exceeded: silent
+    triggers:
+      - trigger: time_pattern
+        minutes: "/10"
+      - trigger: homeassistant
+        event: start
+        id: start
+    actions:
+      - if:
+          - condition: trigger
+            id: start
+        then:
+          - delay: "00:01:00"
+      - action: rest_command.nexus_werte
+  - id: nexus_giessen_erkennen
+    alias: "Nexus: Giessen erkennen"
+    description: "Steigt die Bodenfeuchte eines Sensors auf einen Schlag um 8 Prozentpunkte oder mehr, gilt die Pflanze als gegossen."
+    mode: queued
+    max: 10
+    triggers:
+      - trigger: event
+        event_type: state_changed
+    conditions:
+      - condition: template
+        value_template: >-
+          {%- set n = trigger.event.data.new_state -%}
+          {%- set o = trigger.event.data.old_state -%}
+          {{ n is not none and o is not none and n.domain == 'sensor'
+             and n.attributes.get('device_class') == 'moisture'
+             and is_number(n.state) and is_number(o.state)
+             and (n.state | float) - (o.state | float) >= 8 }}
+    actions:
+      - action: rest_command.nexus_gegossen
+        data:
+          dev: "{{ device_id(trigger.event.data.entity_id) }}"
+      - delay: "00:00:02"
+      - action: rest_command.nexus_werte
+</script>
+<script type="text/plain" id="snRuleTpl">
+    // ===== Nexus: Pflanzensensoren (Home Assistant) =====
+    // Firebase-Konsole -> Firestore Database -> Regeln:
+    // Diesen Block direkt UNTER die Zeile  match /databases/{database}/documents {  einfuegen,
+    // dann "Veroeffentlichen" tippen.
+    match /users/{uid}/sensorfeed/{feed} {
+      allow read, create, delete: if request.auth != null && request.auth.uid == uid;
+      allow update: if (request.auth != null && request.auth.uid == uid)
+        || (feed.size() >= 24
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['s', 'w', 'ts'])
+            && request.resource.data.s is map && request.resource.data.w is map
+            && request.resource.data.ts is int
+            && request.resource.data.s.size() <= 50 && request.resource.data.w.size() <= 50);
+    }
 </script>
 <script src="firebase-config.js"></script>
 <script type="module">
@@ -4295,6 +4558,7 @@ async function startGuest() {
 async function startCloud(u) {
   user = u; mode = "cloud";
   cur = cloudAdapters(u.uid);
+  if (SS.setUid) SS.setUid(u.uid);
   SS.boot(cur.db, cur.assets);
   drawAcctBtn();
   maybeMigrate(u.uid);
